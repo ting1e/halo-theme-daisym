@@ -25,7 +25,7 @@
     <div class="copyright text-767676">
         <div class="copyright" >
             <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
-                © [[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]].
+                © [[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
             </a>
             <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
                 ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
@@ -74,17 +74,17 @@
             </li>
             <li>
                 <div class="copyright text-767676" style="text-align:center">
-                    <div class="copyright" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300">
-                            ©[[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]].
+                    <div class="copyright" >
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
+                            ©[[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]]
                         </a>
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
+                            ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]]
+                        </a>
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300">
+                            [[${theme.config.basics.site_icp}]]
+                         </a>
                         
-                    </div>
-                    <div class="copyright" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300">
-                            ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]].
-            
-                        </a>
                     </div>
                 
                 </div>
