@@ -13,8 +13,8 @@ spec:
   repo: "https://github.com/slyli/halo-theme-daisym"
   settingName: "theme-daisym-setting"
   configMapName: "theme-daisym-configMap"
-  version: 1.0
-  require: 2.0.0
+  version: '1.0'
+  require: '2.0.0'
   customTemplates:
     page:
       - name: 个人页面
