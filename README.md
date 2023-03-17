@@ -7,7 +7,7 @@ daisym 是daisy的个人为适配halo2.0的修改版本
 
 ## 预览
 ### daisym
-* [ Mortal] (https://b.mortal.live)
+* [Mortal] (https://b.mortal.live)
 ### daisy
 * [daisy  Kent Liao](https://www.kokoo.top)
 
