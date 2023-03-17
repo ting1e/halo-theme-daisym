@@ -1,0 +1,48 @@
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title th:if="${site.title != null} and ${site.subtitle != null}" th:text="${site.title} - ${site.subtitle}"></title>
+<title th:unless="${site.title != null} and ${site.subtitle != null}" th:text="${site.title}"></title>
+
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="renderer" content="webkit">
+<!-- <meta name="theme-color" content="${settings.google_color!'#fff'}">
+<meta name="author" content="${user.nickname!}"/>
+<meta name="keywords" content="${meta_keywords!}"/>
+<meta name="description" content="${meta_description!}"/> -->
+<link th:if="${site.favicon != ''}" rel="apple-touch-icon" sizes="180x180" th:href="@{${site.favicon}}">
+<link th:if="${site.favicon != ''}" rel="icon" type="image/png" sizes="32x32" th:href="@{${site.favicon}}">
+<link th:if="${site.favicon != ''}" rel="icon" type="image/png" sizes="16x16" th:href="@{${site.favicon}}">
+<!-- <link th:if="${site.favicon != ''}" rel="manifest" th:href="@{${site.favicon}}"> -->
+
+<link th:href="@{/assets/css/main.css}" rel="stylesheet">
+<link th:href="@{/assets/css/style.css}" rel="stylesheet">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"></noscript>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+<link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/styles/github.min.css" type="text/css" rel="stylesheet" />
+
+
+<style>
+    @font-face {
+        font-family: "OPPOSans-Ver2-Regular";
+        src: url(https://code.oppo.com/content/dam/oppo/common/fonts/font2/new-font/OPPOSansOS2-5000-Regular.woff2) format("woff2"),
+        url(https://code.oppo.com/content/dam/oppo/common/fonts/font2/new-font/OPPOSansOS2-5000-Regular.woff) format("woff"),
+        url(https://code.oppo.com/content/dam/oppo/common/fonts/font2/new-font/OPPOSansOS2-5000-Regular.ttf) format("truetype"),
+        url(https://code.oppo.com/content/dam/oppo/common/fonts/font2/new-font/OPPOSansOS2-5000-Regular.eot) format("embedded-opentype");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    html {
+        font-family: "OPPOSans-Ver2-Regular", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+</style>
+<style>
+    .hljs {
+        background: #f6f8fa;
+    }
+</style>

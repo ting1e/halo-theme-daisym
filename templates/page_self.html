@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{layout :: html(head = null,title= ${site.title},content = ~{::content})}"
+>
+  <th:block th:fragment="content">
+
+  <div class="flex flex-col lg:flex-row">
+    <div class="w-full h-screen lg:pl-[330px] px-[40px] lg:px-0 mt-[-60px] lg:mt-0">
+        <div class="lg:max-w-[1000px] mx-auto h-screen relative">
+            <div class="flex flex-col lg:flex-row justify-center content-center items-center h-screen lg:space-x-16 lg:mx-[20px]">
+                <div class="avatar mb-6 lg:mb-0">
+                    <div class="w-72 h-72 bg-cover bg-no-repeat bg-center animation-morph"
+                         th:style="'background-image:url('+ @{${site.logo}} +'); box-shadow: inset 0px 0px 0px 9px rgb(255 255 255 / 30%); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;'"></div>
+                </div>
+                <div class="resume space-y-6">
+                    <div class="name text-center lg:text-left">
+                        <h1 class="text-6xl subpixel-antialiased font-black font-sans">[[${theme.config.self.name}]]</h1>
+                    </div>
+                    <div class="info text-center lg:text-left">
+                        <p class="text-767676">[[${theme.config.self.description}]]</p>
+                    </div>
+                    <div class="social hidden lg:block">
+                        <ul class="flex space-x-4">
+                                <li th:if="${not #strings.isEmpty(theme.config.self.github)}">
+                                    <a  th:href="@{${theme.config.self.github}}" title="github" target="_blank"><i class="ri-github-line text-2xl"></i></a>
+                                </li>
+                           
+                                <li th:if="${not #strings.isEmpty(theme.config.self.weibo)}">
+                                    <a  th:href="@{${theme.config.self.weibo}}" title="weibo" target="_blank"><i class="ri-weibo-line text-2xl"></i></a>
+                                </li>
+                            
+                                <li th:if="${not #strings.isEmpty(theme.config.self.wechat)}">
+                                    <a  th:href="@{${theme.config.self.wechat}}" title="wechat" target="_blank"><i class="ri-wechat-line text-2xl"></i></a>
+                                </li>
+                            
+                                <li th:if="${not #strings.isEmpty(theme.config.self.qq)}">
+                                    <a  th:href="@{${theme.config.self.qq}}" title="qq" target="_blank"><i class="ri-qq-line text-2xl"></i></a>
+                                </li>
+                            
+                                <li th:if="${not #strings.isEmpty(theme.config.self.bilibili)}">
+                                    <a  th:href="@{${theme.config.self.bilibili}}" title="bilibili" target="_blank"><i class="ri-bilibili-line text-2xl"></i></a>
+                                </li>
+                            
+                                <li th:if="${not #strings.isEmpty(theme.config.self.rss)}">
+                                    <a  th:href="@{${theme.config.self.rss}}" title="rss" target="_blank"><i class="ri-rss-line text-2xl"></i></a>
+                                </li>
+                           
+                                <li th:if="${not #strings.isEmpty(theme.config.self.email)}">
+                                    <a  th:href="@{${theme.config.self.email}}" title="email" target="_blank"><i class="ri-mail-line text-2xl"></i></a>
+                                </li>
+                           
+                                <li th:if="${not #strings.isEmpty(theme.config.self.steam)}">
+                                    <a  th:href="@{${theme.config.self.steam}}" title="steam" target="_blank"><i class="ri-steam-line text-2xl"></i></a>
+                                </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  </th:block>
+</html>

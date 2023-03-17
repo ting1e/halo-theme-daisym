@@ -1,0 +1,96 @@
+<header class="hidden fixed w-[330px] px-16 h-screen space-y-16 lg:flex flex-col justify-center content-start bg-white">
+    <div class="logo">
+        <a th:href="@{${site.url}}" th:title="${site.title}">
+            <img class="logo_img" th:src="${site.logo}" th:alt="${site.title}">
+        </a>
+    </div>
+    <div class="nav">
+        <ul class="text-767676 space-y-2">
+            <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
+                
+                <a class="hover:text-black block w-full hover:tracking-wider duration-300"
+                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:if="${#strings.contains(menuItem.status.href,'console')}"  data-no-instant></a>
+                <a class="hover:text-black block w-full hover:tracking-wider duration-300"
+                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:unless="${#strings.contains(menuItem.status.href,'console')}"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="search flex justify-start text-767676 text-lg space-x-3">
+        <a href="javascript:SearchWidget.open()" class="inline-flex hover:text-black block w-full hover:tracking-wider duration-300">
+            <!-- <div class="border-b border-stone-300 " style="margin-right: 1rem;">搜索</div> -->
+            <i class="ri-search-2-line"></i> 
+        </a>
+        
+    </div>
+    <div class="copyright text-767676">
+        <div class="copyright" >
+            <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
+                © [[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]].
+            </a>
+            <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
+                ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]].
+            </a>
+            <a class="hover:text-black block w-full hover:tracking-wider duration-300">
+               [[${theme.config.basics.site_icp}]].
+            </a>
+            
+        </div>
+        
+        
+
+    </div>
+</header>
+
+
+<header class="lg:hidden bg-white sticky top-0">
+    <div class="flex justify-between p-4">
+        <div class="logo">
+            <a th:href="@{${site.url}}" th:title="${site.title}">
+                <img th:src="${site.logo}" th:alt="${site.title}" style="max-width:15%" >
+            </a>
+        </div>
+        <div class="search flex justify-start text-767676 text-lg space-x-3" style="left: -10%; position: relative; min-width: 10rem;">
+            <div class="flex justify-start content-center">
+                <a href="javascript:SearchWidget.open()" class="inline-flex hover:text-black block w-full hover:tracking-wider duration-300">
+                    <div class="border-b border-stone-300 " style="margin-right: 1rem;"></div>
+                    <i class="ri-search-2-line"></i> 
+                </a>
+            </div>
+                
+            </div>
+        <div class="menu">
+            <a onclick="toggleNav()">
+                <i class="ri-menu-3-line"></i>
+            </a>
+        </div>
+    </div>
+    <div class="mobile-nav right-0 bg-white h-full w-full" id="mobileNav" style="display: none">
+        <ul class="text-767676 space-y-6 py-6">
+            <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
+                <a class="hover:text-black block w-full hover:tracking-wider duration-300 text-center"
+                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" >${menu.name!} </a>
+                    <!-- <a class="hover:text-black block w-full hover:tracking-wider duration-300 text-center"
+                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}"  >${menu.name!} </a> -->
+            </li>
+            <li>
+                <div class="copyright text-767676" style="text-align:center">
+                    <div class="copyright" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300">
+                            ©[[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]].
+                        </a>
+                        
+                    </div>
+                    <div class="copyright" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300">
+                            ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]].
+            
+                        </a>
+                    </div>
+                
+                </div>
+            </li>
+        </ul>
+    </div>
+                  
+    
+</header>

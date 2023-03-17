@@ -1,0 +1,12 @@
+<th:block th:if="${theme.config.sidebar.quote}">
+    <th:block th:replace=~{modules/widgetCard} />
+</th:block>
+<th:block th:if="${theme.config.sidebar.lastpost}">
+    <th:block th:replace=~{modules/widgetNewPost} />
+</th:block>
+<th:block th:if="${theme.config.sidebar.lastcomment}">
+    <th:block th:replace=~{modules/widgetRecentComments} />
+</th:block>
+<th:block th:if="${theme.config.sidebar.webinfo}">
+    <th:block th:replace=~{modules/widgetWebInfo} />
+</th:block>

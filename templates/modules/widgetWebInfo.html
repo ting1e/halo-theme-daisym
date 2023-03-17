@@ -1,0 +1,55 @@
+
+
+<div class="widget bg-white w-full p-8 hover:shadow-lg duration-300" th:with="stats = ${siteStatsFinder.getStats()}">
+    <div class="widget-title text-black font-bold mb-2">
+        <p>统计</p>
+    </div>
+    <div class="widget-hr border-b border-gray-300 w-full mb-4">
+    </div>
+    <div class="widget-content text-767676">
+        <ul >
+            <li class="py-1 w-full flex justify-start space-x-1">
+                <i class="ri-article-line"></i> 
+                <div class="item-name" >文章数 :</div>
+                <div class="item-count" th:text="${stats.post}" ></div>
+            </li>
+
+            <li class="py-1 w-full flex justify-start space-x-1" >
+                <i class="ri-bar-chart-horizontal-line"></i> 
+                <div class="item-name">分类数 :</div>
+                <div class="item-count" th:text="${stats.category}"></div>
+            </li>
+
+            <li class="py-1 w-full flex justify-start space-x-1" >
+                <i class="ri-chat-2-line"></i>
+                <div class="item-name">评论数 :</div>
+                <div class="item-count" th:text="${stats.comment}"></div>
+            </li>
+
+            <li class="py-1 w-full flex justify-start space-x-1" >
+                <i class="ri-footprint-line"></i>
+                <div class="item-name">访问量 :</div>
+                <div class="item-count" th:text="${stats.visit}"></div>
+            </li>
+            <li class="py-1 w-full flex justify-start space-x-1" >
+                <i class="ri-calendar-line"></i>
+                <div class="item-name">建站天数 :</div>
+                <div class="item-count" th:text="${theme.config.basics.siteStartTime}"  id="runtimeshow"></div>
+            </li>
+           
+        </ul>
+    </div>
+</div>
+<script>
+    if (document.getElementById('runtimeshow')) {
+        var s1 = document.getElementById('runtimeshow').innerText;;//建站时间
+        if(s1)
+        {
+            s1 = new Date(s1.replace(/-/g, "/"));
+            s2 = new Date();
+            var days = s2.getTime() - s1.getTime();
+            var number_of_days = parseInt(days / (1000 * 60 * 60 * 24));
+            document.getElementById('runtimeshow').innerText =number_of_days+"天";
+        }
+    }
+</script>

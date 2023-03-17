@@ -1,0 +1,119 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-daisym-setting
+spec:
+  forms:
+    - group: basics
+      label: 基础
+      formSchema:
+        - $formkit: radio
+          name: instantclick
+          label: 局部刷新
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: date
+          name: siteStartTime
+          label: 建站时间
+        - $formkit: text
+          name: site_author
+          label: 站点作者
+        - $formkit: text
+          name: site_icp
+          label: ICP 备案
+
+
+    - group: self
+      label: 个人信息
+      formSchema:
+        - $formkit: text
+          name: name
+          label: 显示名称
+        - $formkit: textarea
+          name: description
+          label: 个人描述
+        - $formkit: url
+          name: github
+          label: github
+          validation: "url"
+        - $formkit: url
+          name: weibo
+          label: weibo
+          validation: "url"
+        - $formkit: url
+          name: wechat
+          label: wechat
+          validation: "url"
+        - $formkit: url
+          name: qq
+          label: qq
+          validation: "url"
+        - $formkit: url
+          name: bilibili
+          label: bilibili
+          validation: "url"
+        - $formkit: url
+          name: rss
+          label: rss
+          validation: "url"
+        - $formkit: url
+          name: email
+          label: email
+          validation: "url"
+        - $formkit: url
+          name: steam
+          label: steam
+          validation: "url"
+
+
+    - group: sidebar
+      label: 侧边栏
+      formSchema:
+        - $formkit: radio
+          name: quote
+          label: 标语
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: text
+          name: quote_title
+          label: 标语标题
+        - $formkit: textarea
+          name: quote_content
+          label: 标语内容
+
+      
+        - $formkit: radio
+          name: lastpost
+          label: 最新文章
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: lastcomment
+          label: 最新评论
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: webinfo
+          label: 统计
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false

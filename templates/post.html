@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{layout :: html(head = null,title = ${post.spec.title} + ' - ' + ${site.title},content = ~{::content})}"
+>
+  <th:block th:fragment="content">
+    
+  <div class="flex flex-col lg:flex-row">
+    <div class="flex flex-col lg:pl-[330px] w-full">
+        <div class="page-title my-20 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
+            <h1 class="text-4xl font-black subpixel-antialiased pl-4 lg:pl-0" id="fillTitle">[[${post.spec.title}]]</h1>
+        </div>
+        <div class="flex flex-col lg:flex-row w-full mx-auto lg:page-mqx-width lg:space-x-8 lg:px-[40px]">
+            <div class="page-content lg:w-[73%] block overflow-hidden">
+                <div class="page-item hover:shadow-lg duration-300 mb-12">
+                    <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
+                        <div class="page-meta text-[##767676] text-base flex justify-between">
+                            <div class="">
+                                <span class="mr-1 widget-title text-black font-bold mb-2">
+                                    <a th:href="'/console/#/posts/editor?name='+${post.metadata.name}"  target="_parent">编辑</a>
+                                </span>
+                                    <span class="mr-1">
+                                    /
+                                </span>
+                                <th:block th:each="category : ${post.categories}">
+                                  <span class="mr-1">
+                                    <a th:href="@{${category.status.permalink}}">[[${category.spec.displayName}]]</a>
+                                    </span>
+                                        <span class="mr-1">
+                                        /
+                                    </span>
+                                </th:block>    
+                                <span>
+                                  发布于[[${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}]]
+                                </span>
+                                   <span class="mr-1">/ </span>
+                                <span>
+                                  更新于[[${#dates.format(post.status.lastModifyTime,'yyyy-MM-dd')}]]
+                                </span>
+
+                                    <span class="mr-1">
+                                    /
+                                </span>
+                                <span>阅读
+                                  [[${post.stats.visit}]]
+                                </span>
+                               
+                            </div>
+                                
+                            <div>
+                                <a class="flex space-x-2 block" href="#comment" title="评论一下">
+                                    <i class="ri-chat-2-line"></i>
+                                    <span>[[${post.stats.comment}]]</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-300 w-full"></div>
+                        <div class="page-summary markdown-body pb-2" id="post-content" th:utext="${post.content.content}">
+                        </div>
+                        <div class="tags flex flex-col">
+                            <div class="border-b w-full border-gray-300 w-full"></div>
+                            <div class="pt-4 w-full flex justify-start space-x-3">
+                                <i class="ri-price-tag-3-line"></i>
+                                    <a  th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" class="hover:text-black">[[${tag.spec.displayName}]]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-nav flex justify-between mb-12 space-x-4" th:with="postCursor = ${postFinder.cursor(post.metadata.name)}">
+                    <div class="prev-post w-1/2 text-left hover:shadow-lg bg-white p-5">
+                            <a class="flex flex-col space-y-1 truncate" th:if="${postCursor.hasPrevious()}" th:href="@{${postCursor.previous.status.permalink}}">
+                                <p class="text-sm text-767676">上一篇</p>
+                                <span class="flex">[[${postCursor.previous.spec.title}]]</span>
+                            </a>
+                            <a class="flex flex-col space-y-1" th:unless="${postCursor.hasPrevious()}">
+                                <p class="text-sm text-767676">上一篇</p>
+                                <span class="flex">暂无文章</span>
+                            </a>
+                    </div>
+                    <div class="next-post w-1/2 text-right hover:shadow-lg bg-white p-5 space-y-1">
+                            <a class="flex flex-col space-y-1" th:if="${postCursor.hasNext()}" th:href="@{${postCursor.next.status.permalink}}">
+                                <p class="text-sm text-767676">下一篇</p>
+                                <span class="flex justify-end">[[${postCursor.next.spec.title}]]</span>
+                            </a>
+                            <a class="flex flex-col space-y-1 justify-end" th:unless="${postCursor.hasNext()}">
+                                <p class="text-sm text-767676">下一篇</p>
+                                <span class="flex justify-end">暂无文章</span>
+                            </a>
+                    </div>
+                </div>
+                <div id="comment-pos">
+                    <halo-comment group="content.halo.run"
+                    kind="Post"
+                    th:attr="name=${post.metadata.name}"
+                    colorScheme="'light'"/>
+                </div>
+            </div>
+            <div class="sidebar lg:w-[27%] block overflow-hidden">
+                <div class="abc flex flex-col space-y-12">
+                    <div class="widget bg-white w-full p-8 hover:shadow-lg duration-300" id="catalog-widget">
+                        <div class="widget-title text-black font-bold mb-2">
+                            <p>文章目录</p>
+                        </div>
+                        <div class="widget-hr border-b border-gray-300 w-full mb-4">
+                        </div>
+                        <div class="widget-content text-767676">
+                            <ul id="catalog">
+                
+                            </ul>
+                        </div>
+                    </div>
+                    <th:block th:replace=~{modules/widgets} />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  </th:block>
+  
+</html>
+
+
+<script>
+  var fixed_catalog = $('#catalog-widget').clone()
+  fixed_catalog.css('position','fixed')
+  fixed_catalog.css('margin-top','0')
+  fixed_catalog.css('margin-top','0')
+  fixed_catalog.css('width','calc(27% - 89px - 32px)')
+  fixed_catalog.css('max-width','320.75px')
+  fixed_catalog.css('max-height','70%')
+  fixed_catalog.css('overflow','auto')
+  fixed_catalog.css('visibility','hidden')
+  
+  $('.abc').append(fixed_catalog)
+  var pos = $('.abc').offset().top + $('.abc').height()
+  $(document).scroll(function(){
+      if($(document).scrollTop()> pos)
+      {
+          fixed_catalog.css('visibility','visible')
+      }
+      else
+      {
+          fixed_catalog.css('visibility','hidden')
+      }
+  })
+  </script>

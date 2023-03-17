@@ -1,0 +1,23 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-daisym
+spec:
+  displayName: theme daisym
+  author:
+    name: Joseph
+    website: "https://halo.run"
+  description: Halo 2.0 Theme base on Thymeleaf
+  logo: "https://halo.run/logo"
+  website: "https://b.mortal.live"
+  repo: "https://github.com/slyli/halo-theme-daisym"
+  settingName: "theme-daisym-setting"
+  configMapName: "theme-daisym-configMap"
+  version: 1.0
+  require: 2.0.0
+  customTemplates:
+    page:
+      - name: 个人页面
+        description: 个人页面
+        screenshot: 
+        file: page_self.html
