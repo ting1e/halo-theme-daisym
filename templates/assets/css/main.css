@@ -386,3 +386,17 @@
     padding-left: 1rem;
     flex: 1 1 0%;
 }
+
+.w-27{
+    width: 27rem;
+}
+.h-27{
+    height: 27rem;
+}
+
+.w-36{
+    width: 36rem;
+}
+.h-36{
+    height: 36rem;
+}

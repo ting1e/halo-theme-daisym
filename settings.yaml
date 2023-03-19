@@ -30,6 +30,20 @@ spec:
     - group: self
       label: 个人信息
       formSchema:
+        - $formkit: attachment
+          name: logo
+          label: 头像
+        - $formkit: radio
+          name: logo_size
+          label: 头像尺寸选择
+          value: small
+          options:
+            - label: 小
+              value: small
+            - label: 中
+              value: middle
+            - label: 大
+              value: large
         - $formkit: text
           name: name
           label: 显示名称
