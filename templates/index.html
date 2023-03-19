@@ -1,81 +1,79 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head=null,title = ${site.title},content = ~{::content})}"
->
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{layout :: html(head=null,title = ${site.title},content = ~{::content})}">
 
 
-  <th:block th:fragment="content">
-    <div class="flex flex-col lg:flex-row">
-      <div class="flex flex-col lg:pl-[330px] w-full">
-          <div class="page-title my-20 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
-              <h1 class="text-4xl font-black subpixel-antialiased pl-4 lg:pl-0"
-                  id="fillTitle" th:text="${site.title}"></h1>
-          </div>
-          <div class="flex flex-col lg:flex-row w-full mx-auto lg:page-mqx-width lg:space-x-8 lg:px-[40px]">
-              <div class="page-content lg:w-[73%] block overflow-hidden">
-                  <div class="page-item hover:shadow-lg duration-300 mb-12" th:each="post : ${posts.items}">
-                      <div class="page-thumbnail overflow-hidden" th:if="${not #strings.isEmpty(post.spec.cover)}">
-                          <a th:attr="title=${post.spec.title}" th:href="@{${post.status.permalink}}">
-                              <img class="ease duration-300 w-full max-h-[400px] hover:scale-110"
-                                    th:src="${post.spec.cover}" th:alt="${post.status.excerpt}">
-                          </a>
-                      </div>
-
-                      <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
-                          <div class="page-meta text-[##767676] text-base flex justify-between">
-                              <div>
-                                  <th:block th:if="${post.spec.pinned}">
-                                      <i class="ri-pushpin-2-line" style="color:#ff7242"></i>
-                                      <span class="mr-1"></span>
-                                  </th:block>
-
-                                  <th:block th:if="${not #lists.isEmpty(post.categories)}">
-                                    <th:block th:each="category : ${post.categories}">
-                                      <span class="mr-1">
-                                        <a th:href="${category.status.permalink}" th:text="${category.spec.displayName}"></a>
-                                      </span>
-                                      <span class="mr-1">
-                                          /
-                                      </span>
-                                    </th:block>
-                                  </th:block>
-                                  
-                                  
-                              </div>
-                              <div class="flex space-x-2 block">
-                                <span th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}">
-                                </span>
-                                  <a class="flex space-x-2 block" th:href="@{${post.status.permalink}+'#comment-pos'}" title="评论一下">
-                                      <i class="ri-chat-2-line"></i>
-                                      <span th:text="${post.stats.comment}"></span>
-                                  </a>
-                              </div>
-                          </div>
-                          <div class="border-b border-gray-300 w-full"></div>
-                          <div class="title text-black">
-                              <a th:attr="title=${post.spec.title}" th:href="@{${post.status.permalink}}">
-                                  <h2 class="text-2xl font-semibold" th:text="${post.spec.title}"></h2>
-                              </a>
-                          </div>
-                          <div class="page-summary">
-                              <p th:text="${post.spec.excerpt.raw}"></p>
-                          </div>
-                      </div>
-                    </div>
-                    <div th:replace="~{modules/pagination :: page('',${posts})}"></div>
-              </div>
-              <div class="sidebar lg:w-[27%] block overflow-hidden mb-12">
-                  <div class="flex flex-col space-y-12">
-                    <!-- <th:block th:replace=~{modules/widgetHotPost} /> -->
-                    <!-- <th:block th:replace=~{modules/widgetNewPost} /> -->
-                    <th:block th:replace=~{modules/widgets} />
-                    
-                     
-                  </div>
-              </div>
-          </div>
+<th:block th:fragment="content">
+  <div class="flex flex-col lg:flex-row">
+    <div class="flex flex-col lg:pl-[330px] w-full">
+      <div class="page-title my-20 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
+        <h1 class="text-4xl font-black subpixel-antialiased pl-4 lg:pl-0" id="fillTitle" th:text="${site.title}"></h1>
       </div>
+      <div class="flex flex-col lg:flex-row w-full mx-auto lg:page-mqx-width lg:space-x-8 lg:px-[40px]">
+        <div class="page-content lg:w-[73%] block overflow-hidden">
+          <div class="page-item hover:shadow-lg duration-300 mb-12" th:each="post : ${posts.items}">
+            <div class="page-thumbnail overflow-hidden" th:if="${not #strings.isEmpty(post.spec.cover)}">
+              <a th:attr="title=${post.spec.title}" th:href="@{${post.status.permalink}}">
+                <img class="ease duration-300 w-full max-h-[400px] hover:scale-110" th:src="${post.spec.cover}"
+                  th:alt="${post.status.excerpt}">
+              </a>
+            </div>
+
+            <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
+              <div class="page-meta text-[##767676] text-base flex justify-between">
+                <div>
+                  <th:block th:if="${post.spec.pinned}">
+                    <i class="ri-pushpin-2-line" style="color:#ff7242"></i>
+                    <span class="mr-1"></span>
+                  </th:block>
+
+                  <th:block th:if="${not #lists.isEmpty(post.categories)}">
+                    <th:block th:each="category : ${post.categories}">
+                      <span class="mr-1">
+                        <a th:href="${category.status.permalink}" th:text="${category.spec.displayName}"></a>
+                      </span>
+                      <span class="mr-1">
+                        /
+                      </span>
+                    </th:block>
+                  </th:block>
+
+
+                </div>
+                <div class="flex space-x-2 block">
+                  <span th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}">
+                  </span>
+                  <a class="flex space-x-2 block" th:href="@{${post.status.permalink}+'#comment-pos'}" title="评论一下">
+                    <i class="ri-chat-2-line"></i>
+                    <span th:text="${post.stats.comment}"></span>
+                  </a>
+                </div>
+              </div>
+              <div class="border-b border-gray-300 w-full"></div>
+              <div class="title text-black">
+                <a th:attr="title=${post.spec.title}" th:href="@{${post.status.permalink}}">
+                  <h2 class="text-2xl font-semibold" th:text="${post.spec.title}"></h2>
+                </a>
+              </div>
+              <div class="page-summary">
+                <p th:text="${post.spec.excerpt.raw}"></p>
+              </div>
+            </div>
+          </div>
+          <div th:replace="~{modules/pagination :: page('',${posts})}"></div>
+        </div>
+        <div class="sidebar lg:w-[27%] block overflow-hidden mb-12">
+          <div class="flex flex-col space-y-12">
+            <!-- <th:block th:replace=~{modules/widgetHotPost} /> -->
+            <!-- <th:block th:replace=~{modules/widgetNewPost} /> -->
+            <th:block th:replace=~{modules/widgets} />
+
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  </th:block>
+</th:block>
+
 </html>
