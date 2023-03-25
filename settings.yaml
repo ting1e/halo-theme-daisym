@@ -8,6 +8,34 @@ spec:
       label: 基础
       formSchema:
         - $formkit: radio
+          name: indexview
+          label: 主页内容
+          value: posts
+          options:
+            - label: 个人主页
+              value: index
+            - label: 文章列表
+              value: posts
+        - $formkit: radio
+          name: archiveview
+          label: 归档页面显示格式
+          value: archive
+          options:
+            - label: 归档格式
+              value: archive
+            - label: 列表格式
+              value: list
+        - $formkit: radio
+          name: cateandtag
+          label: 分类页面是否显示标签
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+
+        - $formkit: radio
           name: instantclick
           label: 局部刷新
           value: true

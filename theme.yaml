@@ -21,3 +21,7 @@ spec:
         description: 个人页面
         screenshot: 
         file: page_self.html
+      - name: 文章列表
+        description: 文章列表
+        screenshot: 
+        file: page_posts.html

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{layout :: html(head = null,title= ${site.title},content = ~{::content})}">
+<th:block th:fragment="content">
+    <!-- 暂未支持
+    <th:block th:with="posts = ${postFinder.list(1,10)}">
+        <th:block th:replace=~{modules/postsList}/>
+    </th:block> -->
+    
+</th:block> 
+
+</html>
