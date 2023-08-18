@@ -17,6 +17,15 @@ spec:
             - label: 文章列表
               value: posts
         - $formkit: radio
+          name: momentstyle
+          label: 瞬间页面样式
+          value: combine
+          options:
+            - label: 合并
+              value: combine
+            - label: 分开
+              value: seperate
+        - $formkit: radio
           name: archiveview
           label: 归档页面显示格式
           value: archive

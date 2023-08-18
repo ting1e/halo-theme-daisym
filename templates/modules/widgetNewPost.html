@@ -7,8 +7,12 @@
     <div class="widget-content text-767676">
         <ul id="newPosts" th:with="posts = ${postFinder.list(1,5)}">
             <li class="py-1 w-full flex justify-start space-x-1" th:each="post : ${posts}">
-                <i class="ri-arrow-right-s-fill"></i>
-                <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
+                <div class="truncate block overflow-hidden">
+                    <i class="ri-arrow-right-s-fill"></i>
+                    <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
+
+                </div>
+                
             </li>
         </ul>
     </div>
