@@ -2,7 +2,7 @@
 
 ## 预览
 
-<img src="http://qiniu.mortal.live/3.png"  />
+<img src="http://qiniu.mortal.live/3.png" />
 <img src="http://qiniu.mortal.live/2.png" />
 <img src="http://qiniu.mortal.live/1.png"  />
 

@@ -123,7 +123,7 @@
                                     </div>
                                 </div>
 
-                                <div class="flex text-others">
+                                <div class="flex text-others justify-end">
                                     <div style="padding-right: 15px;">
                                         <a class="flex space-x-2 block" title="点个赞" th:href="|javascript:handleLike('${moment.metadata.name}')|" 
                                             th:data-moment-name="${moment.metadata.name}">
@@ -132,9 +132,9 @@
                                         </a>
                                     </div>
                                     
-                                    <div class="journal-comment">
+                                    <div class="journal-comment" style="padding-right: 15px;">
                                         
-                                        <a class="flex space-x-2 block" title="评论一下" href="#">
+                                        <a class="flex space-x-2 block" title="评论一下" style="cursor: pointer;">
                                             <i class="ri-chat-2-line"></i>
                                             <span >[[${moment.stats.approvedComment}]]</span>
                                         </a>
