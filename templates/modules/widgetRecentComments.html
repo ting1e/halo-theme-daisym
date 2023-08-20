@@ -5,25 +5,41 @@
     <div class="widget-hr border-b border-gray-300 w-full mb-4">
     </div>
     <div class="widget-content text-767676">
+        <div th:text="${#httpservletrequest}"></div>
 
           <ul th:with="comments = ${commentFinder.list({},1,5)}">
                 <li th:each="comment : ${comments.items}" class="py-1 flex justify-start w-full space-x-1">
                    
                     <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'Moment'" >
                         <i class="ri-arrow-right-s-fill"></i>
-
                         <a class="hover:text-black" th:href="@{'/moments'}">
                             [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
                     </div>
-                    
+
                     <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'Post'" >
                         <i class="ri-arrow-right-s-fill"></i>
-
                         <a class="hover:text-black" th:href="@{${postFinder.getByName(comment.spec.subjectRef.name).status.permalink}}">
                             [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
 
                     </div>
+
+                    <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'SinglePage'" >
+                        <i class="ri-arrow-right-s-fill"></i>
+                        <a class="hover:text-black" th:href="@{${singlePageFinder.getByName(comment.spec.subjectRef.name).status.permalink}}">
+                            [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
+
+                    </div>
+
+                    <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'Links'" >
+                        <i class="ri-arrow-right-s-fill"></i>
+                        <a class="hover:text-black" th:href="@{links}">
+                            [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
+
+                    </div>
+
+                    
                 </li>
             </ul>
     </div>
 </div>
+
