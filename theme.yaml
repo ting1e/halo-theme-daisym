@@ -25,3 +25,7 @@ spec:
         description: 文章列表
         screenshot: 
         file: page_posts.html
+      - name: 文章详情
+        description: 文章详情
+        screenshot: 
+        file: page_article.html
