@@ -68,11 +68,9 @@
                 </div>
                 
                 <div id="comment-pos">
-                    <halo-comment group="content.halo.run"
-                    kind="Post"
-                    th:attr="name=${post.metadata.name}"
-                    colorScheme="'light'"/>
-                </div>
+                  <halo-comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}"
+                      colorScheme="'light'" />
+              </div>
             </div>
             <div class="sidebar lg:w-[27%] block overflow-hidden">
                 <div class="abc flex flex-col space-y-12">
@@ -88,7 +86,6 @@
                             </ul>
                         </div>
                     </div>
-                    <th:block th:replace=~{modules/widgets} />
                 </div>
             </div>
         </div>
