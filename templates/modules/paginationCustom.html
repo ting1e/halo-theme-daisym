@@ -1,0 +1,77 @@
+<th:block th:fragment="pageCustom(posts)">
+
+    <div class="page-item hover:shadow-lg duration-300 mb-12" th:each="post : ${posts}">
+            <div class="page-thumbnail overflow-hidden" th:if="${not #strings.isEmpty(post.spec.cover)}">
+                <a th:attr="title=${post.spec.title}" th:href="@{${post.status.permalink}}">
+                    <img class="ease duration-300 w-full max-h-[400px] hover:scale-110"
+                        th:src="${post.spec.cover}" th:alt="${post.status.excerpt}">
+                </a>
+            </div>
+
+            <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
+                <div class="page-meta text-[##767676] text-base flex justify-between">
+                    <div>
+                        <th:block th:if="${post.spec.pinned}">
+                            <i class="ri-pushpin-2-line" style="color:#ff7242"></i>
+                            <span class="mr-1"></span>
+                        </th:block>
+
+                        <th:block th:if="${not #lists.isEmpty(post.categories)}">
+                            <th:block th:each="category : ${post.categories}">
+                                <span class="mr-1">
+                                    <a th:href="${category.status.permalink}"
+                                        th:text="${category.spec.displayName}"></a>
+                                </span>
+                                <span class="mr-1">
+                                    /
+                                </span>
+                            </th:block>
+                        </th:block>
+
+
+                    </div>
+                    <div class="flex space-x-2 block">
+                        <span th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}">
+                        </span>
+                        <a class="flex space-x-2 block" th:href="@{${post.status.permalink}+'#comment-pos'}"
+                            title="评论一下">
+                            <i class="ri-chat-2-line"></i>
+                            <span th:text="${post.stats.comment}"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-b border-gray-300 w-full"></div>
+                <div class="title text-black">
+                    <a th:attr="title=${post.spec.title}" th:href="@{${post.status.permalink}}">
+                        <h2 class="text-2xl font-semibold" th:text="${post.spec.title}"></h2>
+                    </a>
+                </div>
+                <div class="page-summary">
+                    <p th:text="${post.status.excerpt}"></p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="bg-white p-4 hover:shadow-lg duration-300 mb-12">
+            <nav aria-label="Page navigation">
+                <ul class="flex justify-between list-style-none space-x-3">
+                        <li class="page-item">
+                                <a class="postshasPrevious text-black page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                                th:if="${posts.hasPrevious}" >上一页</a>
+                        </li>
+                        <li class="page-item">
+                            <span class="page-link relative block py-1.5 px-3 rounded border-0 outline-none transition-all duration-300 rounded text-gray-800 text-gray-800 bg-gray-200 shadow-none">
+                                [[${posts.page}]] / [[${posts.totalPages}]]
+                            </span>
+                        </li>
+
+                        <li class="page-item">
+                                <a class="postshasNext text-black relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                                th:if="${posts.hasNext}">下一页</a>
+                        </li>
+                </ul>
+            </nav>
+        </div>
+
+    
+</th:block>
