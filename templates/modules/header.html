@@ -4,17 +4,84 @@
             <img class="logo_img" th:src="${site.logo}" th:alt="${site.title}">
         </a>
     </div>
-    <div class="nav">
+   <div class="nav">
+    <style>
+        /* 为箭头图标添加平滑的过渡效果 */
+        .rotate-90 {
+            transform: rotate(90deg);
+        }
+        .transition-transform {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
         <ul class="text-767676 space-y-2">
-            <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
-                
+            <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}"
+                th:with="hasChildren=${not #lists.isEmpty(menuItem.children)}"
+                th:attr="data-has-children=${hasChildren}">
+
+                <!-- 顶级菜单项 -->
+                <div th:if="${hasChildren}" class="flex justify-between hover:text-black block w-full hover:tracking-wider duration-300" style="cursor: pointer;"
+                    data-toggle>
+                    <span th:text="${menuItem.status.displayName}"></span>
+                    <svg  style="width:1.5rem;height:1.5rem; margin-left:1rem" data-icon viewBox="0 0 24 24">
+                        <polygon points="8,5 19,12 8,19" fill="rgb(118, 118, 118)" />
+                    </svg>
+                </div>
+
+                <!-- 没有子菜单，直接跳转 -->
                 <a class="hover:text-black block w-full hover:tracking-wider duration-300"
-                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:if="${#strings.contains(menuItem.status.href,'console')}"  data-no-instant></a>
-                <a class="hover:text-black block w-full hover:tracking-wider duration-300"
-                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:unless="${#strings.contains(menuItem.status.href,'console')}"></a>
+                th:href="@{${menuItem.status.href}}"
+                th:if="${!hasChildren}"
+                th:text="${menuItem.status.displayName}"></a>
+
+                <!-- 子菜单项 -->
+                <ul class="space-y-1 hidden" data-submenu style="margin-right: 0; ">
+                    <li th:each="submenuItem : ${menuItem.children}">
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300 text-right"
+                        th:href="@{${submenuItem.status.href}}"
+                        th:text="${submenuItem.status.displayName}"></a>
+                    </li>
+                </ul>
             </li>
         </ul>
+        <script>
+        // 等待DOM内容加载完毕
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有带有 `data-toggle` 属性的元素，这些是可点击的顶级菜单项
+            const toggles = document.querySelectorAll('[data-toggle]');
+            
+            // 遍历每个可切换的菜单项
+            toggles.forEach(toggle => {
+                // 为每个菜单项添加点击事件监听器
+                toggle.addEventListener('click', function() {
+                    // 在当前菜单项的父元素中找到子菜单 (带有 `data-submenu` 属性)
+                    // 使用 this.closest() 向上查找父 li 元素，然后向下查找子 ul 元素
+                    const parentLi = this.closest('li');
+                    const submenu = parentLi.querySelector('[data-submenu]');
+                    
+                    // 检查是否找到子菜单
+                    if (submenu) {
+                        // 切换子菜单的 `hidden` 类
+                        submenu.classList.toggle('hidden');
+                        
+                        // 找到菜单项内的SVG图标
+                        const icon = this.querySelector('[data-icon]');
+                        
+                        // 切换图标的旋转类，以实现动画效果
+                        // 如果子菜单显示，则旋转90度
+                        if (submenu.classList.contains('hidden')) {
+                            icon.classList.remove('rotate-90');
+                        } else {
+                            icon.classList.add('rotate-90');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     </div>
+
+
     <div class="search flex justify-start text-767676 text-lg space-x-3">
         <a href="javascript:SearchWidget.open()" class="inline-flex hover:text-black block w-full hover:tracking-wider duration-300">
             <!-- <div class="border-b border-stone-300 " style="margin-right: 1rem;">搜索</div> -->
