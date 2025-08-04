@@ -12,7 +12,7 @@
                     
                     <div class="page-item hover:shadow-lg duration-300 mb-12">
                         <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
-                            <div class="page-title my-10 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
+                            <div class="page-title my-10 mx-auto w-full lg:px-[40px]">
                                 <div class="inline-flex relative w-fit m-3"
                                     th:each="categoryItem : ${categoryFinder.listAll()}">
                                     <div
@@ -26,13 +26,13 @@
                         </div>
                     </div>
                     <th:block th:if="${theme.config.basics.cateandtag}">
-                        <div class="page-title my-20 mx-auto lg:page-mqx-width w-full ">
+                        <div class="page-title my-20 mx-auto  w-full ">
                             <h1 class="text-4xl font-black subpixel-antialiased pl-4 lg:pl-0" id="fillTitle">标签</h1>
                         </div>
                         <div class="page-item hover:shadow-lg duration-300 mb-12">
                             <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
     
-                                <div class="page-title my-10 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
+                                <div class="page-title my-10 mx-auto w-full lg:px-[40px]">
                                     <div class="inline-flex relative w-fit m-3" th:each="tagItem : ${tagFinder.listAll()}">
                                         <div
                                             class="absolute inline-block top-0 right-0 bottom-auto left-auto translate-x-2/4 -translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 py-1 px-2.5 text-xs leading-none text-center whitespace-nowrap align-baseline font-bold bg-[dodgerblue] text-white rounded-full z-10">
