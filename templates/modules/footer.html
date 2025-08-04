@@ -1,6 +1,6 @@
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-<script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/highlight.js/11.4.0/highlight.min.js" type="application/javascript"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/fancybox.umd.js}"></script>
+<script th:src="@{/assets/js/highlight.min.js}" type="application/javascript"></script>
 
 <script th:src="@{/assets/js/main.js}"></script>
 <script th:src="@{/assets/js/daisy.js}"></script>
@@ -73,7 +73,7 @@
     </script>
 
 <th:block th:if="${theme.config.basics.instantclick}">
-    <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/instantclick/3.1.0/instantclick.min.js" type="application/javascript" data-no-instant></script>
+    <script th:src="@{/assets/js/instantclick.min.js}" type="application/javascript" data-no-instant></script>
     <script>
         InstantClick.on('change', function (isInitialLoad) {
             if (isInitialLoad) {
