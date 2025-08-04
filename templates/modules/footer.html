@@ -13,8 +13,24 @@
     var urlstatus = false;
     $(".nav li a").each(function () {
         if ((url + '/').indexOf($(this).attr('href').replace('.html', '')) > -1 && $(this).attr('href').replace('.html', '') != '/') {
+
             $(this).addClass('text-black font-semibold tracking-wide');
             urlstatus = true;
+
+            const submenu =$(this).closest('[data-has-children]');
+            const menuul = $(this).closest('ul[data-submenu]');
+            const icon = $(this).closest('[data-icon]');
+            console.log(submenu.data('has-children'));
+            if (submenu.data('has-children')) {
+                console.log(submenu)
+
+                if (menuul.hasClass('hidden')) {
+                        menuul.removeClass('hidden');
+                        icon.removeClass('rotate-90');
+                    } else {
+                        icon.addClass('rotate-90');
+                    }
+            }
         } else {
             $(this).removeClass('text-black font-semibold tracking-wide');
         }
@@ -23,6 +39,43 @@
         $(".nav li a").eq(0).addClass('text-black font-semibold tracking-wide');
     }
 </script>
+
+<script>
+        // 等待DOM内容加载完毕
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有带有 `data-toggle` 属性的元素，这些是可点击的顶级菜单项
+            const toggles = document.querySelectorAll('[data-toggle]');
+            
+            // 遍历每个可切换的菜单项
+            toggles.forEach(toggle => {
+                // 为每个菜单项添加点击事件监听器
+                toggle.addEventListener('click', function() {
+                    // 在当前菜单项的父元素中找到子菜单 (带有 `data-submenu` 属性)
+                    // 使用 this.closest() 向上查找父 li 元素，然后向下查找子 ul 元素
+                    const parentLi = this.closest('li');
+                    const submenu = parentLi.querySelector('[data-submenu]');
+                    
+                    // 检查是否找到子菜单
+                    if (submenu) {
+                        // 切换子菜单的 `hidden` 类
+                        submenu.classList.toggle('hidden');
+                        
+                        // 找到菜单项内的SVG图标
+                        const icon = this.querySelector('[data-icon]');
+                        
+                        // 切换图标的旋转类，以实现动画效果
+                        // 如果子菜单显示，则旋转90度
+                        if (submenu.classList.contains('hidden')) {
+                            icon.classList.remove('rotate-90');
+                        } else {
+                            icon.classList.add('rotate-90');
+                        }
+                    }
+                });
+            });
+        });
+        
+    </script>
 
 <th:block th:if="${theme.config.basics.instantclick}">
     <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/instantclick/3.1.0/instantclick.min.js" type="application/javascript" data-no-instant></script>
