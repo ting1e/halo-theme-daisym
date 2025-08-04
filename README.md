@@ -2,13 +2,12 @@
 
 ## 预览
 
-<img src="http://qiniu.mortal.live/3.png" />
-<img src="http://qiniu.mortal.live/2.png" />
-<img src="http://qiniu.mortal.live/1.png"  />
+
 
 ### 地址
-* [Mortal](https://b.mortal.live)
-* [daisy  Kent Liao](https://www.kokoo.top)
+* [本仓库 ](https://elapse.cc)
+
+* [ 原版 daisy  Kent Liao](https://www.kokoo.top)
 
 daisy 是一款简洁、大气的 halo 主题。不仅仅适用于个人博客，也适用于个人形象打造，产品宣传等，地址 https://github.com/liaocp666/halo-theme-daisy 。
 
@@ -47,6 +46,10 @@ daisym 是daisy的个人 适配halo2.0的 daisy修改版本
 - 添加两种瞬间显示（原日志） 可在主题页面配置
 - 添加最新评论模块
 - 修复摘要问题
+
+## 新增功能
+- 图库页面
+- 自定义页面模板
 
 ## 配置
 
