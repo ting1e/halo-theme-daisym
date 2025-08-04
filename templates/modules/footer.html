@@ -20,10 +20,7 @@
             const submenu =$(this).closest('[data-has-children]');
             const menuul = $(this).closest('ul[data-submenu]');
             const icon = submenu.find('[data-icon]');
-            console.log(submenu.data('has-children'));
             if (submenu.data('has-children')) {
-                console.log(icon)
-
                 if (menuul.hasClass('hidden')) {
                         menuul.removeClass('hidden');
                         icon.addClass('rotate-90');
