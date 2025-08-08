@@ -88,8 +88,8 @@
                             </a>
                     </div>
                 </div>
-                <div id="comment-pos">
-                    <halo-comment group="content.halo.run"
+                <div id="comment-pos" class="comment-min-size" th:if="${haloCommentEnabled}" >
+                    <halo-comment group="content.halo.run" 
                     kind="Post"
                     th:attr="name=${post.metadata.name}"
                     colorScheme="'light'"/>

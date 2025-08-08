@@ -137,6 +137,7 @@
                                         <div class="moment-media">
                                             <img th:if="${momentItem.type.name == 'PHOTO'}" th:src="${momentItem.url}"/>
                                             <video th:if="${momentItem.type.name == 'VIDEO'}" th:src="${momentItem.url}"></video>
+                                           
                                         </div>     
                                         </th:block>
                                     </div>
@@ -190,26 +191,10 @@
 </th:block>
 
 </html>
-<script src="
-https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js
-"></script>
-<link href="
-https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery.min.css
-" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
-<script type="text/javascript">
-    lightGallery(document.querySelector('body'), {
-        plugins: [lgZoom],
-        speed: 500,
-        selector: "img",
 
-        // ... other settings
-    });
-</script>
 
 <script>
     
-
 $(".journal-comment").click(function(){
     var that = $(this);
     var ele = that.parents().children('.journal-comment-div');

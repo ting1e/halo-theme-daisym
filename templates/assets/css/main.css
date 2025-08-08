@@ -507,3 +507,8 @@ font-size: 20px;
 color: #bcc3ce !important;
 font-size: 15px;
 }   
+
+.comment-min-size{
+    min-height: 10px;
+    min-width: 10px;
+}
