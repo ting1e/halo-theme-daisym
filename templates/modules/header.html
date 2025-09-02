@@ -20,7 +20,7 @@
                 th:attr="data-has-children=${hasChildren}">
 
                 <!-- 顶级菜单项 -->
-                <div th:if="${hasChildren}" class="flex justify-between hover:text-black block w-full hover:tracking-wider duration-300" style="cursor: pointer;"
+                <div th:if="${hasChildren}" class="flex  hover:text-black block w-full hover:tracking-wider duration-300" style="cursor: pointer;"
                     data-toggle>
                     <span th:text="${menuItem.status.displayName}"></span>
                     <svg  style="width:1.5rem;height:1.5rem; margin-left:1rem" data-icon viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
                 <!-- 子菜单项 -->
                 <ul class="space-y-1 hidden" data-submenu style="margin: 0.5rem 0">
                     <li th:each="submenuItem : ${menuItem.children}">
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300 text-right"
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300" style="margin-left: 3rem;"
                         th:href="@{${submenuItem.status.href}}"
                         th:text="${submenuItem.status.displayName}"></a>
                     </li>
