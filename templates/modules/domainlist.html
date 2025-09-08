@@ -1,11 +1,11 @@
-<div class="page-summary markdown-body pb-2 flex justify-start " id="post-content" style="flex-wrap: wrap;">
+<div class="page-summary markdown-body pb-2 pt-4 flex justify-start " id="post-content" style="flex-wrap: wrap;">
   <th:block th:each="link : ${linkFinder.listBy(theme.config.custom.domainmeta)}">
     <div class="next-post hover:shadow-lg p-5 space-y-1 mb-4 mr-4" style="width: 23%; background: #f8f8f8; text-align: center;margin-right: 16px; min-width: 200px">
         <a th:href="'https://'+${link.spec.url}" target="_blank">
             <div style="position:relative">
             <p th:text="${link.spec.url}" class="animated-gradient-text"></p>
             <p th:text="${link.spec.displayName}"  style="margin-bottom: 8px; font-size: 1.2rem;"></p>
-            <p th:text="${link.spec.description}" style="margin-bottom: 0;position: absolute;right: 0;bottom: -1.35rem; color: #a9a9a9;font-size: 0.8rem;"></p>
+            <p th:text="${link.spec.description}" style="margin-bottom: 0;position: absolute;right: 0;bottom: -1.35rem; color: #888;font-size: 0.8rem;"></p>
         </div>
         </a>
     </div>
