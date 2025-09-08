@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{layout :: html(head = null,title=${singlePage.spec.title} +'-'+ ${site.title},content = ~{::content})}"
+>
+  <th:block th:fragment="content">
+    
+  <div class="flex flex-col lg:flex-row">
+    <div class="flex flex-col lg:pl-[330px] w-full">
+        <div class="page-title my-20 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
+            <h1 class="text-4xl font-black subpixel-antialiased pl-4 lg:pl-0" id="fillTitle">[[${singlePage.spec.title}]]</h1>
+        </div>
+        <div class="flex flex-col lg:flex-row w-full mx-auto lg:page-mqx-width lg:space-x-8 lg:px-[40px]">
+            <div class="page-content lg:w-[73%] block overflow-hidden">
+                <div class="page-item hover:shadow-lg duration-300 mb-12">
+                    <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
+                        <div class="page-meta text-[##767676] text-base flex justify-between">
+                            <div class="">
+                                <span class="mr-1 widget-title text-black font-bold mb-2">
+                                    <a th:href="'/console/single-pages/editor?name='+${singlePage.metadata.name}"  target="_parent">编辑</a>
+                                </span>
+                                    <span class="mr-1">
+                                    /
+                                </span>
+
+                                <span>
+                                  发布于[[${#dates.format(singlePage.spec.publishTime,'yyyy-MM-dd')}]]
+                                </span>
+                                   <span class="mr-1">/ </span>
+                                <span>
+                                  更新于[[${#dates.format(singlePage.status.lastModifyTime,'yyyy-MM-dd')}]]
+                                </span>
+
+                                    <span class="mr-1">
+                                    /
+                                </span>
+                                <span>阅读
+                                  [[${singlePage.stats.visit}]]
+                                </span>
+                            </div>
+
+                          <div>
+                                <a class="flex space-x-2 block" href="#comment-pos" title="评论一下">
+                                    <i class="ri-chat-2-line"></i>
+                                    <span>[[${singlePage.stats.comment}]]</span>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="border-b border-gray-300 w-full"></div>
+                        <div class="page-summary markdown-body pb-2" id="post-content">
+                          <div > test </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="comment-pos" class="comment-min-size">
+                  <halo-comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}"
+                      colorScheme="'light'" />
+              </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+  </th:block>
+  
+</html>
+
