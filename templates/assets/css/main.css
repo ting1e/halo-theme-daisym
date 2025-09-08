@@ -512,3 +512,38 @@ font-size: 15px;
     min-height: 10px;
     min-width: 10px;
 }
+
+
+.animated-gradient-text {
+    background: linear-gradient(
+        45deg,
+        #ff6b6b,
+        #feca57,
+        #48dbfb,
+        #ff6b6b, /* 再次添加起始颜色，形成循环 */
+        #feca57,
+        #48dbfb
+    );
+    /* 调整 background-size，使其宽度大于100%，才能有滑动空间 */
+    /* 200% 表示渐变背景的宽度是文字容器的两倍，这样才有足够的“内容”滑动 */
+    background-size: 300% 100%;
+    
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important; /* 文字颜色透明，露出背景 */
+    font-weight: 700;
+    font-size: 2rem;
+
+    /* 添加动画 */
+    animation: gradient-slide 2s linear infinite; /* 动画名称 持续时间 动画速度 重复次数 */
+}
+
+@keyframes gradient-slide {
+    0% {
+        background-position: 0% 50%; /* 渐变背景的起始位置 */
+    }
+    100% {
+        background-position: 100% 50%; /* 渐变背景的结束位置 */
+    }
+}
+

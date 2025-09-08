@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="https://www.thymeleaf.org"
+  th:fragment="html (head,title,header,content)"
+>
+  <head>
+    <title th:text="${title}"></title>
+
+    <th:block th:if="${head != null}">
+      <th:block th:replace="${head}" />
+    </th:block> 
+    <th:block th:if="${head == null}">
+      <th:block th:replace=~{modules/head} />
+    </th:block> 
+  </head>
+  <body class="bg-[#f9f9f9]">
+    <th:block th:if="${header != null}">
+      <th:block th:replace="${header}" />
+    </th:block> 
+    <th:block th:if="${header == null}">
+      <th:block th:replace=~{modules/header} />
+    </th:block> 
+    
+    <section>
+      <th:block th:replace="${content}" />
+    </section>
+
+    <th:block th:replace=~{modules/footer} />
+  </body>
+</html>

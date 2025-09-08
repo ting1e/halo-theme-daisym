@@ -1,5 +1,63 @@
 <!DOCTYPE html>
-<html
+
+<th:block th:if="${theme.config.custom.baremode}">
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <title th:text="${singlePage.spec.title}"></title>
+    <th:block th:replace=~{modules/head} />
+  </head>
+  <body class="bg-[#f9f9f9]">
+    
+  <div class="flex flex-col lg:flex-row">
+    <div class="flex flex-col lg:pl-[330px] w-full">
+        <div class="page-title my-20 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
+            <h1 class="text-4xl font-black subpixel-antialiased pl-4 lg:pl-0" id="fillTitle">[[${singlePage.spec.title}]]</h1>
+        </div>
+        <div class="flex flex-col lg:flex-row w-full mx-auto lg:page-mqx-width lg:space-x-8 lg:px-[40px]">
+            <div class="page-content lg:w-[73%] block overflow-hidden">
+                <div class="page-item hover:shadow-lg duration-300 mb-12">
+                    <div class="page-content bg-white p-4 lg:p-8 text-767676 flex flex-col space-y-3">
+                        <div class="page-meta text-[##767676] text-base flex justify-between">
+                            <div class="">
+                               
+                            </div>
+                          <div>
+                                <a class="flex space-x-2 block" href="#comment-pos" title="评论一下">
+                                    <i class="ri-chat-2-line"></i>
+                                    <span>[[${singlePage.stats.comment}]]</span>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="border-b border-gray-300 w-full"></div>
+                        <th:block th:replace= ~{modules/domainlist} />
+                    </div>
+                </div>
+                <th:block th:if="${theme.config.custom.domaincomment}"  >
+                  <div id="comment-pos" class="comment-min-size" >
+                    <halo-comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}"
+                      colorScheme="'light'" />
+                  </div>
+
+                </th:block>
+                
+                
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+  <th:block th:replace=~{modules/footer} />
+</body>
+
+</html>
+</th:block>
+
+
+<th:block th:if="${!theme.config.custom.baremode}" >
+<html 
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{layout :: html(head = null,title=${singlePage.spec.title} +'-'+ ${site.title},content = ~{::content})}"
 >
@@ -48,41 +106,25 @@
 
                         </div>
                         <div class="border-b border-gray-300 w-full"></div>
-                        <div class="page-summary markdown-body pb-2 flex justify-start " id="post-content" style="flex-wrap: wrap;">
-                          <th:block th:each="link : ${linkFinder.listBy('link-group-akagamsa')}">
-                            <div class="next-post hover:shadow-lg p-5 space-y-1 mb-4 mr-4" style="width: 30%; background: #f4f4f4; text-align: center;margin-right: 8px; min-width: 200px">
-                              <a  class="flex flex-col space-y-1 truncate">
-                                <div>
-                                    <div >
-                                        <div>
-                                            <p th:text="${link.spec.displayName}"></p>
-                                            <p th:text="${link.spec.description}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                              </a>
-
-
-                            </div>
-                            
-                          </th:block>
-
-                        </div>
+                        <th:block th:replace= ~{modules/domainlist} />
+                        
                     </div>
                 </div>
-                
-                <div id="comment-pos" class="comment-min-size">
-                  <halo-comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}"
+                <th:block th:if="${theme.config.custom.domaincomment}"  >
+                  <div id="comment-pos" class="comment-min-size" >
+                    <halo-comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}"
                       colorScheme="'light'" />
-              </div>
+                  </div>
+
+                </th:block>
+                
+                
             </div>
            
         </div>
     </div>
 </div>
+</th:block>
 
-
-  </th:block>
-  
 </html>
-
+</th:block>

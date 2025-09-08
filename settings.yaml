@@ -168,3 +168,27 @@ spec:
               value: true
             - label: 关闭
               value: false
+    - group: custom
+      label: 其他自定义
+      formSchema:
+        - $formkit: textarea
+          name: domainmeta
+          label: 域名分组meta
+        - $formkit: radio
+          name: baremode
+          label: 域名页面纯净模式
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: domaincomment
+          label: 域名评论
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
