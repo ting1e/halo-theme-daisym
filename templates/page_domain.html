@@ -17,7 +17,7 @@
                         <div class="page-meta text-[##767676] text-base flex justify-between">
                             <div class="">
                                 <span class="mr-1 widget-title text-black font-bold mb-2">
-                                    <a th:href="'/console/single-pages/editor?name='+${singlePage.metadata.name}"  target="_parent">编辑</a>
+                                    <a th:href="'/console/links?group=link-group-akagamsa'"  target="_parent">编辑</a>
                                 </span>
                                     <span class="mr-1">
                                     /
@@ -48,8 +48,25 @@
 
                         </div>
                         <div class="border-b border-gray-300 w-full"></div>
-                        <div class="page-summary markdown-body pb-2" id="post-content">
-                          <div > test </div>
+                        <div class="page-summary markdown-body pb-2 flex justify-start " id="post-content" style="flex-wrap: wrap;">
+                          <th:block th:each="link : ${linkFinder.listBy('link-group-akagamsa')}">
+                            <div class="next-post hover:shadow-lg p-5 space-y-1 mb-4 mr-4" style="width: 30%; background: #f4f4f4; text-align: center;margin-right: 8px; min-width: 200px">
+                              <a  class="flex flex-col space-y-1 truncate">
+                                <div>
+                                    <div >
+                                        <div>
+                                            <p th:text="${link.spec.displayName}"></p>
+                                            <p th:text="${link.spec.description}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                              </a>
+
+
+                            </div>
+                            
+                          </th:block>
+
                         </div>
                     </div>
                 </div>
