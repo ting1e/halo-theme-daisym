@@ -29,3 +29,7 @@ spec:
         description: 文章详情
         screenshot: 
         file: page_article.html
+      - name: 域名
+        description: 域名列表
+        screenshot: 
+        file: page_domain.html
