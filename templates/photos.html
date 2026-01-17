@@ -4,72 +4,72 @@
 
 <th:block th:fragment="content">
 
-<style>
-.masonry {
-    column-count: 4;
-    column-gap: 1rem;
-    padding: 3rem;
-}
+    <style>
+        .masonry {
+            column-count: 4;
+            column-gap: 1rem;
+            padding: 3rem;
+        }
 
-.masonry-item {
-    break-inside: avoid;
-    margin-bottom: 1rem;
-}
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
 
-.masonry-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-}
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
 
-  @media (min-width: 2000px) {
-    .lg\:page-pho-width {
-        max-width: 85%;
-    }
-}
+        @media (min-width: 2000px) {
+            .lg\:page-pho-width {
+                max-width: 85%;
+            }
+        }
+    </style>
 
 
-</style>
+    <div class="flex flex-col lg:flex-row">
+        <div class="flex flex-col lg:pl-[330px] w-full">
+            <div class="page-title my-20 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
 
-<div class="w-full h-screen lg:pl-[330px] px-[40px] lg:px-0 mt-[-60px] lg:mt-0">
-    <div class="page-title my-20 mx-auto lg:page-mqx-width w-full lg:px-[40px]">
-        <div class="flex items-center justify-left text-767676">
-            <a
-            th:href="@{/photos}"
-            class="text-4xl subpixel-antialiased pl-0 hover:text-black  hover:tracking-wider"
-            th:classappend="${#lists.isEmpty(param.group) ? 'font-black font-semibold text-black' : ''}"
-            th:text="全部"
-            >
-            </a>
-          
-            <a
-                th:each="group : ${photoFinder.groupBy()}"
-                th:href="@{|/photos?group=${group.metadata.name}|}"
-                class="text-4xl  subpixel-antialiased pl-4 hover:text-black  hover:tracking-wider"
-                th:classappend="${#lists.contains(param.group, group.metadata.name) ? 'font-black font-semibold text-black' : ''}"
-                th:text="${group.spec.displayName}"
-            >
-            </a>
+                <div class="flex items-center justify-left text-767676">
+                    <div class="text-4xl subpixel-antialiased text-black tracking-wider font-black">图库</div>
 
-        </div>
+                    <a th:href="@{/photos}"
+                        class="text-4xl subpixel-antialiased pl-4 hover:text-black  hover:tracking-wider"
+                        th:classappend="${#lists.isEmpty(param.group) ? 'font-black font-semibold text-black' : ''}"
+                        th:text="全部">
+                    </a>
 
-    </div>
+                    <a th:each="group : ${photoFinder.groupBy()}" th:href="@{|/photos?group=${group.metadata.name}|}"
+                        class="text-4xl  subpixel-antialiased pl-4 hover:text-black  hover:tracking-wider"
+                        th:classappend="${#lists.contains(param.group, group.metadata.name) ? 'font-black font-semibold text-black' : ''}"
+                        th:text="${group.spec.displayName}">
+                    </a>
 
-    <div class="flex flex-col lg:flex-row w-full lg:page-pho-width  mx-auto  lg:space-x-8 lg:px-[40px]" >
-        <div class="page-content lg:w-[100%]">
-            <div class="masonry bg-white mb-12">
-                    <div class="masonry-item" th:each="photo : ${photos.items}">
-                        <img th:src="${photo.spec.url}" th:alt="${photo.spec.displayName}">
-                        
-                    </div>
+                </div>
             </div>
-            
-            <div th:replace="~{modules/pagination :: page('',${photos})}"></div>
-            
+            <div class="flex flex-col lg:flex-row w-full lg:page-pho-width  mx-auto  lg:space-x-8 lg:px-[40px]">
+                <div class="page-content lg:w-[100%]">
+                    <div class="masonry bg-white mb-12 hover:shadow-lg">
+                        <div class="masonry-item" th:each="photo : ${photos.items}">
+                            <img th:src="${photo.spec.url}" th:alt="${photo.spec.displayName}">
 
+                        </div>
+                    </div>
+
+                    <div th:replace="~{modules/pagination :: page('',${photos})}"></div>
+
+
+                </div>
+            </div>
         </div>
     </div>
+
+
 
 
     <!-- <div class="flex flex-col lg:flex-row w-full mx-auto  lg:space-x-8 lg:px-[40px]" >
@@ -89,13 +89,10 @@
     </div> -->
 
 
-           
-</div> 
+
+    </div>
 
 
 </th:block>
 
 </html>
-
-
-

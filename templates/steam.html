@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{layout :: html(head = null,title='Steam 游戏库 - '+ ${site.title},content = ~{::content})}">
+
+<th:block th:fragment="content">
+
+    <style>
+        /* Steam Page Width Control - matches photos */
+        @media (min-width: 2000px) {
+            .lg\:page-steam-width {
+                max-width: 85%;
+            }
+        }
+
+        .steam-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+        }
+
+        .steam-status-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #9ca3af;
+            border: 2px solid #fff;
+        }
+
+        .steam-status-dot.online {
+            background: #06b6d4;
+        }
+
+        .steam-status-dot.playing {
+            background: #22c55e;
+        }
+
+        .steam-level-badge {
+            background: #3b82f6;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Stats horizontal 3-column grid */
+        .steam-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .steam-stat-item {
+            background: #f3f4f6;
+            border-radius: 6px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        .steam-stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            white-space: nowrap;
+        }
+
+        .steam-stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        /* Game Cards - light style */
+        .steam-game-card {
+            background: #f9fafb;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .steam-game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .steam-game-img {
+            width: 100%;
+            aspect-ratio: 460 / 215;
+            object-fit: cover;
+        }
+
+        /* Recent games section - auto height */
+        .steam-recent-game-img {
+            width: 100%;
+            height: 0;
+            flex: 1;
+            min-height: 0;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .steam-game-info {
+            padding: 10px;
+            flex-shrink: 0;
+        }
+
+        .steam-game-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1f2937;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .steam-game-time {
+            font-size: 11px;
+            color: #22c55e;
+            font-weight: 500;
+        }
+
+        /* Badge */
+        .steam-badge {
+            width: 28px;
+            height: 28px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .steam-badge:hover {
+            border-color: #3b82f6;
+            transform: scale(1.1);
+        }
+
+        .steam-badge--foil {
+            border-color: #fbbf24;
+            box-shadow: 0 0 4px rgba(251, 191, 36, 0.3);
+        }
+
+        .steam-badge--more {
+            background: #e5e7eb;
+            color: #374151;
+            text-decoration: none;
+        }
+
+        .steam-badge--more:hover {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .steam-badge-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .steam-badge-level {
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            background: #3b82f6;
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+
+        /* Button */
+        .steam-btn {
+            display: inline-flex;
+            right: 20px;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background-color: rgb(229, 231, 235);
+            color: #000000;
+            text-decoration: none;
+            font-size: 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+
+        /* Error Banner */
+        .steam-error-banner {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #dc2626;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Empty State */
+        .steam-empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        /* Grid Layouts */
+        .steam-recent-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .steam-games-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 1280px) {
+            .steam-recent-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .steam-games-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .steam-recent-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .steam-games-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .steam-stat-item {
+                padding: 10px 4px;
+            }
+
+            .steam-stat-value {
+                font-size: 14px;
+            }
+
+            .steam-recent-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steam-games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Profile row layout - 1/3 and 2/3 split */
+        @media (min-width: 1024px) {
+            .steam-col-1-3 {
+                width: 33.333333%;
+                flex-shrink: 0;
+            }
+
+            .steam-col-2-3 {
+                width: 66.666667%;
+                flex-grow: 1;
+            }
+        }
+    </style>
+
+    <div class="flex flex-col lg:flex-row">
+        <div class="flex flex-col lg:pl-[330px] w-full">
+
+            <!-- Main Content -->
+            <div class="flex flex-col lg:flex-row w-full lg:page-steam-width mx-auto lg:space-x-8 lg:px-[40px] pt-20">
+                <div class="page-content lg:w-[100%]">
+
+                    <th:block
+                        th:with="profile=${steamFinder.getProfile()}, recentGames=${steamFinder.getRecentGames(recentGamesLimit)}, stats=${steamFinder.getStats()}, badges=${steamFinder.getBadges()}">
+
+                        <!-- Error Banner -->
+                        <div class="steam-error-banner mb-6"
+                            th:if="${profile == null || recentGames == null || stats == null || badges == null || games == null}">
+                            <span>⚠️</span>
+                            <span>部分 Steam 数据加载失败，可能是服务器连接超时。请稍后刷新重试，或检查插件配置。</span>
+                        </div>
+
+                        <!-- Profile and Recent Games Row - side by side -->
+                        <div class="flex flex-col lg:flex-row gap-6 mb-12 items-stretch" style="margin-top: 50px; ">
+
+                            <!-- Left: Profile Card with Stats Below -->
+                            <div class="page-item hover:shadow-lg duration-300 steam-col-1-3"
+                                style="background-color: #fff; margin-right: 20px; min-width: 400px;"
+                                th:if="${profile != null}" th:with="p=${profile}">
+                                <div class="page-content bg-white p-8 relative">
+                                    <!-- Visit Steam Button (top-right) -->
+                                    <a th:href="${p?.summary?.profileUrl}" target="_blank"
+                                        class="steam-btn absolute hover:shadow-lg"
+                                        style="padding: 6px 12px; font-size: 12px; top: 150px; right: 30px;">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12">
+                                            <path
+                                                d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
+                                        </svg>
+                                        访问 Steam
+                                    </a>
+                                    <!-- Top: Avatar + Profile Info -->
+                                    <div class="flex gap-4 items-start mb-12 text-2xl">
+                                        <div class="relative flex-shrink-0 " style="margin-right: 10px;">
+                                            <img class="steam-avatar" th:src="${p?.summary?.avatarFull}"
+                                                th:alt="${p?.summary?.personaName}" alt="Avatar">
+                                            <span class="steam-status-dot absolute  " style="right: 2px; bottom: 2px;"
+                                                th:classappend="${p?.playing ? 'playing' : (p?.summary?.personaState == 1 ? 'online' : '')}"></span>
+                                        </div>
+                                        <div class="flex-1 min-w-0 flex flex-col">
+                                            <h2 class="text-xl font-light text-gray-900 truncate"
+                                                th:text="${p?.summary?.personaName}">Steam User</h2>
+                                            <div class="flex items-center text-sm" style="margin-top: 10px;">
+                                                <span
+                                                    th:classappend="${p?.playing ? 'text-green-500' : (p?.summary?.personaState == 1 ? 'text-cyan-500' : 'text-gray-400')}"
+                                                    th:text="${p?.statusText}">离线</span>
+                                                <span class="text-gray-400 text-xs"
+                                                    th:if="${!p?.playing and p?.summary?.personaState != 1 and p?.summary?.lastLogoff != null}"
+                                                    th:text="'· 上次在线：' + ${#dates.format(new java.util.Date(p.summary.lastLogoff * 1000), 'yyyy-MM-dd HH:mm')}"></span>
+                                            </div>
+                                            <div class="flex items-left text-xs" style="margin-top: 10px;">
+                                                <span class="steam-level-badge" th:if="${p?.steamLevel}"> <span
+                                                        th:text="${p?.steamLevel}">0</span> 级</span>
+
+                                            </div>
+                                            <!-- Badges -->
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Bottom: Stats Row (3 columns horizontal) -->
+                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                                        <div class="steam-stat-item  " style="text-align: center; padding: 8px;">
+                                            <div class="steam-stat-value"
+                                                th:text="${stats != null ? stats.totalGames : '-'}">0</div>
+                                            <div class="steam-stat-label">游戏</div>
+                                        </div>
+                                        <div class="steam-stat-item" style="text-align: center; padding:8px;">
+                                            <div class="steam-stat-value"
+                                                th:text="${stats != null ? stats.totalPlaytimeFormatted : '-'}">0h</div>
+                                            <div class="steam-stat-label">总时长</div>
+                                        </div>
+                                        <div class="steam-stat-item" style="text-align: center; padding:8px;">
+                                            <div class="steam-stat-value"
+                                                th:text="${stats != null ? stats.recentPlaytimeFormatted : '-'}">0h
+                                            </div>
+                                            <div class="steam-stat-label">近两周</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Right: Recent Games -->
+                            <div class="page-item hover:shadow-lg duration-300 steam-col-2-3">
+                                <div class="page-content bg-white p-8 h-full flex flex-col">
+                                    <div
+                                        class="text-767676 text-base flex justify-between mb-6 pb-3 border-b border-gray-200 flex-shrink-0">
+                                        <span class="font-semibold text-gray-900">最近游玩</span>
+                                        <span class="text-gray-400"
+                                            th:if="${recentGames != null && !recentGames.isEmpty()}"
+                                            th:text="'最近两周 · ' + ${#lists.size(recentGames)} + ' 款'"></span>
+                                    </div>
+
+                                    <div style="display: flex; gap: 12px; overflow-x: auto; flex-wrap: nowrap; padding: 8px;  "
+                                        th:if="${recentGames != null && !recentGames.isEmpty()}">
+                                        <div class="steam-game-card steam-col-1-3" th:each="game : ${recentGames}">
+                                            <a th:if="${enableGameLink}"
+                                                th:href="'https://store.steampowered.com/app/' + ${game.appId}"
+                                                target="_blank" class="block h-full flex flex-col">
+                                                <img th:src="${game.headerImageUrl}" th:alt="${game.name}"
+                                                    loading="lazy">
+                                                <div class="steam-game-info">
+                                                    <div class="steam-game-name" th:text="${game.name}">Game</div>
+                                                    <div class="flex items-center justify-between text-xs mt-1">
+                                                        <span class="steam-game-time"
+                                                            th:text="${game.playtime2WeeksFormatted}">0h</span>
+                                                        <span class="text-gray-400"
+                                                            th:if="${game.achievementProgressText != null}"
+                                                            th:text="'🏆' + ${game.achievementProgressText}"></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div th:unless="${enableGameLink}" class="h-full flex flex-col">
+                                                <img th:src="${game.headerImageUrl}" th:alt="${game.name}"
+                                                    loading="lazy">
+                                                <div class="steam-game-info">
+                                                    <div class="steam-game-name" th:text="${game.name}">Game</div>
+                                                    <div class="flex items-center justify-between text-xs mt-1">
+                                                        <span class="steam-game-time"
+                                                            th:text="${game.playtime2WeeksFormatted}">0h</span>
+                                                        <span class="text-gray-400"
+                                                            th:if="${game.achievementProgressText != null}"
+                                                            th:text="'🏆' + ${game.achievementProgressText}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="steam-empty-state"
+                                        th:if="${recentGames != null && recentGames.isEmpty()}">
+                                        <div class="text-4xl mb-3">😴</div>
+                                        <div class="text-gray-800 mb-1">最近两周没有玩游戏</div>
+                                        <div class="text-sm">休息一下也挺好的</div>
+                                    </div>
+
+                                    <div class="steam-empty-state" th:if="${recentGames == null}">
+                                        <div class="text-4xl mb-3">⚠️</div>
+                                        <div class="text-gray-800 mb-1">最近游玩加载失败</div>
+                                        <div class="text-sm">Steam 服务器连接超时，请稍后刷新重试</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </th:block>
+
+                    <!-- Games Library Section - matching theme style -->
+                    <div class="page-item hover:shadow-lg duration-300 mb-12">
+                        <div class="page-content bg-white p-8">
+                            <div class="text-767676 text-base flex justify-between mb-6 pb-3 border-b border-gray-200">
+                                <span class="font-semibold text-gray-900">游戏库</span>
+                                <span class="text-gray-400" th:if="${gamesLimit} != null and ${gamesLimit} gt 0"
+                                    th:text="'按游玩时长排序 · Top ' + ${gamesLimit}"></span>
+                                <span class="text-gray-400"
+                                    th:unless="${gamesLimit} != null and ${gamesLimit} gt 0">全部游戏 · 按游玩时长排序</span>
+                            </div>
+
+                            <th:block th:if="${games != null}">
+                                <div class="steam-games-grid" th:if="${!games.items.isEmpty()}">
+                                    <div class="steam-game-card" th:each="game : ${games.items}">
+                                        <a th:if="${enableGameLink}"
+                                            th:href="'https://store.steampowered.com/app/' + ${game.appId}"
+                                            target="_blank" class="block">
+                                            <img class="steam-game-img" th:src="${game.headerImageUrl}"
+                                                th:alt="${game.name}" loading="lazy">
+                                            <div class="steam-game-info">
+                                                <div class="steam-game-name" th:text="${game.name}">Game</div>
+                                                <div class="flex items-center justify-between text-xs mt-1">
+                                                    <span class="steam-game-time"
+                                                        th:text="${game.playtimeFormatted}">0h</span>
+                                                    <span class="text-gray-400" th:if="${game.lastPlayedFormatted}"
+                                                        th:text="'最后: '+${game.lastPlayedFormatted}"></span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div th:unless="${enableGameLink}">
+                                            <img class="steam-game-img" th:src="${game.headerImageUrl}"
+                                                th:alt="${game.name}" loading="lazy">
+                                            <div class="steam-game-info">
+                                                <div class="steam-game-name" th:text="${game.name}">Game</div>
+                                                <div class="flex items-center justify-between text-xs mt-1">
+                                                    <span class="steam-game-time"
+                                                        th:text="${game.playtimeFormatted}">0h</span>
+                                                    <span class="text-gray-400" th:if="${game.lastPlayedFormatted}"
+                                                        th:text="'最后: '+${game.lastPlayedFormatted}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="steam-empty-state" th:if="${games.items.isEmpty()}">
+                                    <div class="text-4xl mb-3">🎮</div>
+                                    <div class="text-gray-800 mb-1">暂无游戏数据</div>
+                                    <div class="text-sm">游戏库为空，请检查 Steam 账号设置</div>
+                                </div>
+                            </th:block>
+
+                            <div class="steam-empty-state" th:if="${games == null}">
+                                <div class="text-4xl mb-3">⚠️</div>
+                                <div class="text-gray-800 mb-1">游戏库加载失败</div>
+                                <div class="text-sm">Steam 服务器连接超时，请稍后刷新重试</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination - using theme module -->
+                    <div th:replace="~{modules/pagination :: page('',${games})}"></div>
+
+                    <!-- Comment Section - matching theme style -->
+                    <div class="page-item hover:shadow-lg duration-300 mb-12">
+                        <div class="page-content bg-white p-8">
+                            <div id="comment-pos" class="comment-min-size">
+                                <halo-comment group="plugin.halo.run" kind="Plugin" th:attr="name=steam"
+                                    colorScheme="'light'" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</html>
