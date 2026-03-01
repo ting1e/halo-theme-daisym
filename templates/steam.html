@@ -43,12 +43,6 @@
             font-weight: 600;
         }
 
-        /* Stats horizontal 3-column grid */
-        .steam-stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
 
         .steam-stat-item {
             background: #f3f4f6;
@@ -91,16 +85,6 @@
             object-fit: cover;
         }
 
-        /* Recent games section - auto height */
-        .steam-recent-game-img {
-            width: 100%;
-            height: 0;
-            flex: 1;
-            min-height: 0;
-            object-fit: cover;
-            object-position: center;
-            border-radius: 6px 6px 0 0;
-        }
 
         .steam-game-info {
             padding: 10px;
@@ -212,11 +196,6 @@
         }
 
         /* Grid Layouts */
-        .steam-recent-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
 
         .steam-games-grid {
             display: grid;
@@ -225,9 +204,6 @@
         }
 
         @media (max-width: 1280px) {
-            .steam-recent-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
 
             .steam-games-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -235,9 +211,6 @@
         }
 
         @media (max-width: 1024px) {
-            .steam-recent-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
 
             .steam-games-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -253,9 +226,6 @@
                 font-size: 14px;
             }
 
-            .steam-recent-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
 
             .steam-games-grid {
                 grid-template-columns: 1fr;
@@ -274,6 +244,59 @@
                 flex-grow: 1;
             }
         }
+
+
+        .heatmap-container {
+            position: relative;
+            aspect-ratio: 7 / 1;
+        }
+
+        .heatmap-chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        .heatmap-loading,
+        .heatmap-empty,
+        .heatmap-error {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--steam-bg);
+        }
+
+        .heatmap-loading__spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--steam-border);
+            border-top-color: var(--steam-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .heatmap-loading__text {
+            font-size: 14px;
+            color: var(--steam-text-light);
+        }
+
+        .heatmap-empty,
+        .heatmap-error {
+            padding: 40px 20px;
+        }
+
+
     </style>
 
     <div class="flex flex-col lg:flex-row">
@@ -431,6 +454,35 @@
                         </div>
 
                     </th:block>
+                    <!-- Heatmap Section -->
+
+                    <div class="page-item hover:shadow-lg duration-300 mb-12" th:if="${showHeatmap}">
+                        <div class="page-content bg-white p-8">
+                            <div class="text-767676 text-base flex justify-between mb-6 pb-3 border-b border-gray-200">
+                                <span class="font-semibold text-gray-900">游戏时长热力图</span>
+                                <span class="text-gray-400" th:text="'最近 ' + ${heatmapDays} + ' 天的游戏时长统计'"></span>
+                            </div>
+
+                           
+                            <div class="heatmap-container">
+                                <div id="heatmap-chart" class="heatmap-chart"></div>
+                                <div class="heatmap-loading" id="heatmap-loading">
+                                    <div class="heatmap-loading__spinner"></div>
+                                    <div class="heatmap-loading__text">加载热力图数据中...</div>
+                                </div>
+                                <div class="heatmap-empty" id="heatmap-empty" style="display: none;">
+                                    <div class="empty-state__icon">📊</div>
+                                    <div class="empty-state__title">暂无热力图数据</div>
+                                    <div class="empty-state__desc">请在插件设置中启用热力图追踪功能，并等待至少 1 小时后数据开始记录</div>
+                                </div>
+                                <div class="heatmap-error" id="heatmap-error" style="display: none;">
+                                    <div class="empty-state__icon">⚠️</div>
+                                    <div class="empty-state__title">热力图加载失败</div>
+                                    <div class="empty-state__desc">无法获取热力图数据，请稍后重试</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Games Library Section - matching theme style -->
                     <div class="page-item hover:shadow-lg duration-300 mb-12">
@@ -509,6 +561,211 @@
             </div>
         </div>
     </div>
+
+
+
+    <script th:if="${showHeatmap}" th:inline="javascript">
+// 热力图配置
+const heatmapConfig = {
+    days: /*[[${heatmapDays}]]*/ 365
+};
+
+
+// 加载 ECharts
+function loadECharts() {
+    return new Promise((resolve, reject) => {
+        if (window.echarts) {
+            resolve(window.echarts);
+            return;
+        }
+        const script = document.createElement('script');
+        // 使用国内 CDN
+        script.src = 'https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js';
+        script.onload = () => resolve(window.echarts);
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+// 获取热力图数据
+async function fetchHeatmapData() {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - heatmapConfig.days);
+    
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+    
+    const url = `/apis/api.steam.timxs.com/v1alpha1/heatmap/records?startDate=${formatDate(startDate)}&endDate=${formatDate(endDate)}&page=1&size=${heatmapConfig.days}`;
+    
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Failed to fetch heatmap data');
+    }
+    return await response.json();
+}
+
+// 处理数据为 ECharts 格式
+function processHeatmapData(data) {
+    const dateMap = new Map();
+    
+    // 聚合每天的总时长
+    if (data.items && data.items.length > 0) {
+        data.items.forEach(record => {
+            const date = record.spec.date;
+            const minutes = record.spec.playtimeMinutes || 0;
+            dateMap.set(date, (dateMap.get(date) || 0) + minutes);
+        });
+    }
+    
+    // 生成完整日期范围的数据
+    const result = [];
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - heatmapConfig.days);
+    
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        const dateStr = d.toISOString().split('T')[0];
+        const minutes = dateMap.get(dateStr) || 0;
+        const hours = (minutes / 60).toFixed(1);
+        result.push([dateStr, minutes, hours]);
+    }
+    
+    return result;
+}
+
+// 渲染热力图
+async function renderHeatmap() {
+    const loadingEl = document.getElementById('heatmap-loading');
+    const emptyEl = document.getElementById('heatmap-empty');
+    const errorEl = document.getElementById('heatmap-error');
+    const chartEl = document.getElementById('heatmap-chart');
+
+    cell_size =  Math.min((chartEl.clientHeight - 55)/7,(chartEl.clientWidth - 80)/52)
+    
+    try {
+        // 加载 ECharts
+        const echarts = await loadECharts();
+        
+        // 获取数据
+        const data = await fetchHeatmapData();
+        const chartData = processHeatmapData(data);
+        
+        // 隐藏加载状态
+        loadingEl.style.display = 'none';
+        
+        // 显示图表 (即使没有数据也显示空白热力图)
+        chartEl.style.display = 'block';
+        
+        // 初始化图表
+        const chart = echarts.init(chartEl);
+        
+        
+        // 配置选项
+        option = {
+            tooltip: {
+                position: 'top',
+                formatter: function(params) {
+                    const date = params.data[0];
+                    const hours = params.data[2];
+                    return `${date}<br/>游戏时长: ${hours} 小时`;
+                },
+                backgroundColor: '#000',
+                // borderColor: '#2a475e',
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            grid: {
+                show: false,  // 取消显示边框
+                borderWidth: 0  // 确保没有边框线
+            },
+            visualMap: {
+            min: 0,
+            max: 1440,
+            show: false,  // 关闭颜色条
+            pieces: [
+                    {min: 0, max: 1/60, color: '#ebedf0'},
+                    {min: 1/60, max: 1, color: '#9be9a8'},
+                    {min: 1, max: 3, color: '#40c463'},
+                    {min: 3, max: 6, color: '#30a14e'},
+                    {min: 6, max: 24, color: '#216e39'},
+                ]
+            },
+            calendar: {
+                top: 20,
+                left: 30,
+                right: 30,
+                bottom: 20,
+                range: [chartData[0][0], chartData[chartData.length - 1][0]],
+                cellSize: cell_size,
+                splitLine: {
+                    show: false
+                },
+                itemStyle: {
+                    borderColor: 'transparent',
+                    borderWidth: 0
+                },
+                yearLabel: {
+                    show: true,
+                    color: '#c7d5e0'
+                },
+                monthLabel: {
+                    show: true,
+                    color: '#8f98a0',
+                    nameMap: 'ZH'
+                },
+                dayLabel: {
+                    show: true,
+                    color: '#8f98a0',
+                    nameMap: 'ZH',
+                    firstDay: 1
+                }
+            },
+            series: [{
+                calendarIndex: 0,
+                type: 'scatter',
+                coordinateSystem: 'calendar',
+                symbol:'path://M5,0 L15,0 C16.1,0 17,0.9 17,2 L17,13 C17,14.1 16.1,15 15,15 L5,15 C3.9,15 3,14.1 3,13 L3,2 C3,0.9 3.9,0 5,0 Z',
+                symbolSize:cell_size *0.8,
+                
+                data: chartData,
+                }],
+        };
+        
+        chart.setOption(option);
+        
+        
+        // 响应式
+        window.addEventListener('resize', () => {
+            cell_size =  Math.min((chartEl.clientHeight - 55)/7,(chartEl.clientWidth - 80)/52)
+            option.calendar.cellSize = cell_size
+            option.series[0].symbolSize = cell_size * 0.8; 
+            // console.log(cell_size)
+            chart.setOption(option);
+            chart.resize();
+        });
+        
+    } catch (error) {
+        console.error('Failed to render heatmap:', error);
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'flex';
+    }
+}
+
+
+
+// 页面加载完成后渲染热力图
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderHeatmap);
+} else {
+    renderHeatmap();
+}
+</script>
 
 </th:block>
 
