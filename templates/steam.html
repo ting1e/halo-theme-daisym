@@ -579,8 +579,7 @@ function loadECharts() {
             return;
         }
         const script = document.createElement('script');
-        // 使用国内 CDN
-        script.src = 'https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js';
+        script.src = /*[[@{/assets/js/echarts.min.js}]]*/ '';
         script.onload = () => resolve(window.echarts);
         script.onerror = reject;
         document.head.appendChild(script);
