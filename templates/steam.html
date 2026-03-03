@@ -696,10 +696,10 @@ async function renderHeatmap() {
                 ]
             },
             calendar: {
-                top: 20,
+                top: 35,
                 left: 30,
-                right: 30,
-                bottom: 20,
+                right: 0,
+                bottom: 10,
                 range: [chartData[0][0], chartData[chartData.length - 1][0]],
                 cellSize: cell_size,
                 splitLine: {
@@ -715,12 +715,12 @@ async function renderHeatmap() {
                 },
                 monthLabel: {
                     show: true,
-                    color: '#8f98a0',
+                    color: '#767676',
                     nameMap: 'ZH'
                 },
                 dayLabel: {
                     show: true,
-                    color: '#8f98a0',
+                    color: '#767676',
                     nameMap: 'ZH',
                     firstDay: 1
                 }
