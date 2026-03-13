@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{layout :: html(head = null, title = ${site.title}, content = ~{::content})}">
+
+<th:block th:fragment="content">
+  <div id="desktop" class="relative w-full min-h-screen p-6">
+
+    <!-- Widget: 个人名片 -->
+    <div class="desktop-widget" data-widget-id="profile" style="left: 40px; top: 40px; width: 480px;">
+      <div class="flex items-center space-x-3 mb-4">
+        <div class="w-24 h-24 rounded-full bg-cover bg-center flex-shrink-0"
+          th:if="${not #strings.isEmpty(theme.config.self.logo)}"
+          th:style="'background-image: url(' + @{${theme.config.self.logo}} + ')'"></div>
+        <div>
+          <h2 class="text-xl font-bold" th:text="${theme.config.self.name}"></h2>
+          <p class="text-lg text-gray-500" th:text="${theme.config.self.description}"></p>
+        </div>
+      </div>
+      <div class="flex space-x-3">
+        <a th:if="${not #strings.isEmpty(theme.config.self.github)}" th:href="@{${theme.config.self.github}}"
+          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-github-line text-xl"></i></a>
+        <a th:if="${not #strings.isEmpty(theme.config.self.bilibili)}" th:href="@{${theme.config.self.bilibili}}"
+          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-bilibili-line text-xl"></i></a>
+        <a th:if="${not #strings.isEmpty(theme.config.self.email)}" th:href="@{${theme.config.self.email}}"
+          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-mail-line text-xl"></i></a>
+        <a th:if="${not #strings.isEmpty(theme.config.self.steam)}" th:href="@{${theme.config.self.steam}}"
+          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-steam-line text-xl"></i></a>
+        <a th:if="${not #strings.isEmpty(theme.config.self.rss)}" th:href="@{${theme.config.self.rss}}"
+          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-rss-line text-xl"></i></a>
+      </div>
+    </div>
+
+    <!-- Widget: 最新文章 -->
+    <div class="desktop-widget" data-widget-id="newpost" style="left: 40px; top: 300px; width: 320px;">
+      <th:block th:replace=~{modules/widgetNewPost} />
+    </div>
+
+     <!-- Widget: 底部 -->
+    <div class="desktop-widget flex justify-center" data-widget-id="footer" style="left: 40px; top: 800px; width: 480px;">
+      <th:block th:replace=~{modules/widgetFoot} />
+    </div>
+
+     <!-- Widget: 菜单 -->
+    <div class="desktop-widget" data-widget-id="menu" style="left: 40px; top: 300px; width: 150px;">
+      <div class="pl-6 pr-2">
+        <th:block th:replace=~{modules/widgetMenu} />
+      </div>
+    </div>
+
+     <!-- Widget: 文章列表 -->
+    <div class="desktop-widget" data-widget-id="postlist" style="left: 40px; top: 300px; width: 640px;">
+      <th:block th:replace=~{modules/postsList} />
+    </div>
+
+    <!-- Widget: 最新评论 -->
+    <div class="desktop-widget" data-widget-id="comments" style="left: 400px; top: 40px; width: 380px;">
+      <th:block th:replace=~{modules/widgetRecentComments} />
+    </div>
+
+    <!-- Widget: 站点统计 -->
+    <div class="desktop-widget" data-widget-id="webinfo" style="left: 400px; top: 380px; width: 380px;">
+      <th:block th:replace=~{modules/widgetWebInfo} />
+    </div>
+
+    <!-- Widget: 标语 -->
+    <div class="desktop-widget" data-widget-id="quote" style="left: 820px; top: 40px; width: 320px;">
+      <th:block th:replace=~{modules/widgetCard} />
+    </div>
+
+  </div>
+
+  <!-- 浮动工具栏 -->
+  <div id="desktop-toolbar" class="fixed bottom-7 right-7 flex gap-2 z-[200]">
+    <button id="btn-preset" title="预设布局"
+    class="flex items-center gap-1.5 py-2.5 px-4 border border-white/60 rounded-[10px] bg-white/85 backdrop-blur-[12px] shadow-md text-sm text-gray-700 cursor-pointer select-none transition-all duration-200 hover:bg-white/95 hover:shadow-lg hover:-translate-y-px active:translate-y-0 active:scale-[0.97]">
+    <i class="ri-layout-5-line text-lg"></i>
+    <span>预设</span>
+  </button>
+
+    <button id="btn-arrange" title="整理"
+      class="flex items-center gap-1.5 py-2.5 px-4 border border-white/60 rounded-[10px] bg-white/85 backdrop-blur-[12px] shadow-md text-sm text-gray-700 cursor-pointer select-none transition-all duration-200 hover:bg-white/95 hover:shadow-lg hover:-translate-y-px active:translate-y-0 active:scale-[0.97]">
+      <i class="ri-layout-grid-line text-lg"></i>
+      <span>整理</span>
+    </button>
+    <button id="btn-random" title="随机"
+      class="flex items-center gap-1.5 py-2.5 px-4 border border-white/60 rounded-[10px] bg-white/85 backdrop-blur-[12px] shadow-md text-sm text-gray-700 cursor-pointer select-none transition-all duration-200 hover:bg-white/95 hover:shadow-lg hover:-translate-y-px active:translate-y-0 active:scale-[0.97]">
+      <i class="ri-shuffle-line text-lg"></i>
+      <span>随机</span>
+    </button>
+    <button title="搜索" onclick="javascript:SearchWidget.open()"
+      class="flex items-center gap-1.5 py-2.5 px-4 border border-white/60 rounded-[10px] bg-white/85 backdrop-blur-[12px] shadow-md text-sm text-gray-700 cursor-pointer select-none transition-all duration-200 hover:bg-white/95 hover:shadow-lg hover:-translate-y-px active:translate-y-0 active:scale-[0.97]">
+      <i class="ri-search-line text-lg"></i>
+      <span>搜索</span>
+    </button>
+
+   
+  </div>
+
+  <style>
+    
+
+    .desktop-widget {
+      position: absolute;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.15s;
+      z-index: 1;
+      padding: 16px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .desktop-widget:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .desktop-widget.dragging {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      z-index: 100;
+      opacity: 0.95;
+      cursor: grabbing;
+      transform: scale(1.02);
+    }
+
+    .desktop-widget a, 
+    .desktop-widget button {
+      cursor: pointer;
+      user-select: auto;
+    }
+
+    /* 覆盖内嵌 widget 的默认样式 */
+    .desktop-widget > .widget {
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+      width: 100%;
+    }
+
+    .desktop-widget > .widget:hover {
+      box-shadow: none;
+    }
+
+
+  </style>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = 'desktop-widget-positions';
+
+      function loadPositions() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+        catch (e) { return {}; }
+      }
+
+      function savePositions() {
+        var positions = {};
+        document.querySelectorAll('.desktop-widget').forEach(function (w) {
+          var id = w.dataset.widgetId;
+          if (id) { positions[id] = { left: w.style.left, top: w.style.top }; }
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(positions));
+      }
+
+     function arrangeWidgets() {
+        const widgets = Array.from(document.querySelectorAll('.desktop-widget'));
+        const gap = 20;
+        const minX = 40, minY = 40;
+
+        // 预先获取初始位置和尺寸，避免循环中频繁读取 DOM 导致 Layout Thrashing
+        const data = widgets.map(w => ({
+          el: w,
+          w: w.offsetWidth,
+          h: w.offsetHeight,
+          x: parseFloat(w.style.left) || 0,
+          y: parseFloat(w.style.top) || 0
+        }));
+
+        widgets.forEach(w => w.style.transition = 'all 0.35s ease');
+
+        // 排序：先整理左边的，再整理上边的，避免逻辑相互干扰
+        for (let i = 0; i < 2; i++) {
+            // 1. 向左靠拢
+          data.sort((a, b) => a.x - b.x).forEach(item => {
+            let targetX = minX;
+            data.forEach(other => {
+              if (item === other) return;
+              // 在同一水平带上，且 other 在 item 左侧
+              const isOverlapY = !(item.y + item.h + gap <= other.y || item.y >= other.y + other.h + gap);
+              if (isOverlapY && other.x + other.w + gap <= item.x) {
+                targetX = Math.max(targetX, other.x + other.w + gap);
+              }
+            });
+            item.x = targetX;
+            item.el.style.left = item.x + 'px';
+          });
+
+          // 2. 向上靠拢
+          data.sort((a, b) => a.y - b.y).forEach(item => {
+            let targetY = minY;
+            data.forEach(other => {
+              if (item === other) return;
+              // 在同一垂直带上，且 other 在 item 上方
+              const isOverlapX = !(item.x + item.w + gap <= other.x || item.x >= other.x + other.w + gap);
+              if (isOverlapX && other.y + other.h + gap <= item.y) {
+                targetY = Math.max(targetY, other.y + other.h + gap);
+              }
+            });
+            item.y = targetY;
+            item.el.style.top = item.y + 'px';
+          });
+
+        }
+
+        
+        savePositions();
+        setTimeout(() => {
+          widgets.forEach(w => w.style.transition = '');
+        }, 400);
+      }
+      // 预设布局
+      function presetLayout() {
+        var desktop = document.getElementById('desktop');
+        var dW = desktop.clientWidth;
+        var dH = desktop.clientHeight;
+        var widgets = Array.from(document.querySelectorAll('.desktop-widget'));
+
+        // 定义位置系数 (x: left比例, y: top比例)
+        // 基于 0-1 之间的浮点数
+        var ratios = {
+          'profile':  { x: 0.05, y: 0.1 }, // 左上
+          'menu':     { x: 0.1, y: 0.3 }, // 左中
+          'footer':   { x: 0.05, y: 0.75 }, // 左下
+          'postlist': { x: 0.32, y: 0.15 }, // 中上
+          'newpost':  { x: 0.32, y: 0.6 }, // 文章列表下左
+          'comments': { x: 0.5, y: 0.6 }, // 文章列表下右
+          'quote':    { x: 0.7, y: 0.1 }, // 右上
+          'webinfo':  { x: 0.7, y: 0.45 }  // 右下
+        };
+
+        widgets.forEach(function (w) {
+          var cfg = ratios[w.dataset.widgetId];
+          if (cfg) {
+            // 计算实际像素位置并取整
+            w.style.left = Math.round(dW * cfg.x) + 'px';
+            w.style.top = Math.round(dH * cfg.y) + 'px';
+            w.style.transition = 'left 0.4s ease, top 0.4s ease';
+          }
+        });
+
+        savePositions();
+        
+        // 动画结束后移除 transition 避免拖拽延迟
+        setTimeout(function () {
+          widgets.forEach(function (w) { w.style.transition = ''; });
+        }, 450);
+      }
+
+
+      // 随机：随机放置且互不遮挡
+      function randomizeWidgets() {
+        var desktop = document.getElementById('desktop');
+        var dW = desktop.clientWidth, dH = desktop.clientHeight;
+        var widgets = Array.from(document.querySelectorAll('.desktop-widget'));
+        var placed = []; // { x, y, w, h }
+        var padding = 20;
+
+        function overlaps(x, y, w, h) {
+          for (var i = 0; i < placed.length; i++) {
+            var p = placed[i];
+            if (x < p.x + p.w + padding && x + w + padding > p.x &&
+                y < p.y + p.h + padding && y + h + padding > p.y) {
+              return true;
+            }
+          }
+          return false;
+        }
+
+        widgets.forEach(function (w) {
+          var rect = w.getBoundingClientRect();
+          var wW = rect.width, wH = rect.height;
+          var maxX = Math.max(40, dW - wW - 20);
+          var maxY = Math.max(40, dH - wH - 20);
+          var x = 40, y = 40, found = false;
+
+          for (var attempt = 0; attempt < 200; attempt++) {
+            x = 40 + Math.floor(Math.random() * (maxX - 40));
+            y = 40 + Math.floor(Math.random() * (maxY - 40));
+            if (!overlaps(x, y, wW, wH)) { found = true; break; }
+          }
+
+          // 兜底：即使没找到也放置
+          placed.push({ x: x, y: y, w: wW, h: wH });
+          w.style.left = x + 'px';
+          w.style.top = y + 'px';
+          w.style.transition = 'left 0.35s ease, top 0.35s ease';
+        });
+
+        savePositions();
+        setTimeout(function () {
+          widgets.forEach(function (w) { w.style.transition = ''; });
+        }, 400);
+      }
+
+      // 绑定按钮
+      document.getElementById('btn-arrange').addEventListener('click', arrangeWidgets);
+      document.getElementById('btn-random').addEventListener('click', randomizeWidgets);
+      document.getElementById('btn-preset').addEventListener('click', presetLayout);
+
+      // 恢复保存的位置
+      var saved = loadPositions();
+      document.querySelectorAll('.desktop-widget').forEach(function (w) {
+        var id = w.dataset.widgetId;
+        if (saved[id]) {
+          w.style.left = saved[id].left;
+          w.style.top = saved[id].top;
+        }
+      });
+
+      // 拖拽逻辑
+      var dragTarget = null, offsetX = 0, offsetY = 0;
+
+      function isInteractive(target) {
+        return !!target.closest('a, button, input, textarea, select, iframe');
+      }
+
+      document.addEventListener('mousedown', function (e) {
+        // 只有点击组件本身（或非交互子元素）才触发拖拽
+        var widget = e.target.closest('.desktop-widget');
+        if (!widget || isInteractive(e.target)) return;
+
+        dragTarget = widget;
+        var rect = dragTarget.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        dragTarget.classList.add('dragging');
+        
+        document.querySelectorAll('.desktop-widget').forEach(function (w) { w.style.zIndex = '1'; });
+        dragTarget.style.zIndex = '100';
+        
+        // 我们不使用 preventDefault()，因为那会阻止文本选择/默认行为。
+        // 但为了拖拽体验，通常我们会加上它。
+        // e.preventDefault(); 
+      });
+
+      document.addEventListener('mousemove', function (e) {
+        if (!dragTarget) return;
+        var cr = document.getElementById('desktop').getBoundingClientRect();
+        dragTarget.style.left = (e.clientX - cr.left - offsetX) + 'px';
+        dragTarget.style.top = (e.clientY - cr.top - offsetY) + 'px';
+      });
+
+      document.addEventListener('mouseup', function () {
+        if (!dragTarget) return;
+        dragTarget.classList.remove('dragging');
+        dragTarget = null;
+        savePositions();
+      });
+
+      // 触摸支持
+      document.addEventListener('touchstart', function (e) {
+        var widget = e.target.closest('.desktop-widget');
+        if (!widget || isInteractive(e.target)) return;
+
+        dragTarget = widget;
+        var t = e.touches[0], rect = dragTarget.getBoundingClientRect();
+        offsetX = t.clientX - rect.left;
+        offsetY = t.clientY - rect.top;
+        dragTarget.classList.add('dragging');
+        
+        document.querySelectorAll('.desktop-widget').forEach(function (w) { w.style.zIndex = '1'; });
+        dragTarget.style.zIndex = '100';
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function (e) {
+        if (!dragTarget) return;
+        var t = e.touches[0], cr = document.getElementById('desktop').getBoundingClientRect();
+        dragTarget.style.left = (t.clientX - cr.left - offsetX) + 'px';
+        dragTarget.style.top = (t.clientY - cr.top - offsetY) + 'px';
+        
+        // 只有正在拖拽时才阻止滚动
+        if (e.cancelable) e.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener('touchend', function () {
+        if (!dragTarget) return;
+        dragTarget.classList.remove('dragging');
+        dragTarget = null;
+        savePositions();
+      });
+    })();
+  </script>
+</th:block>
+
+</html>

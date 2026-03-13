@@ -3,10 +3,13 @@
     th:replace="~{layout :: html(head=null,title = ${site.title},content = ~{::content})}">
 <th:block th:fragment="content">
     <th:block th:if="${theme.config.basics.indexview} eq 'posts' "  >
-        <th:block th:replace=~{modules/postsList}/>
+        <th:block th:replace=~{modules/postsIndex}/>
     </th:block>
     <th:block th:if="${theme.config.basics.indexview} eq 'index' "  >
         <th:block th:replace=~{page_self::content}/>
+    </th:block>
+    <th:block th:if="${theme.config.basics.indexview} eq 'desktop' "  >
+        <th:block th:replace=~{desktop::content}/>
     </th:block>
 </th:block>
 

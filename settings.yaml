@@ -16,6 +16,8 @@ spec:
               value: index
             - label: 文章列表
               value: posts
+            - label: 桌面布局
+              value: desktop
         - $formkit: radio
           name: momentstyle
           label: 瞬间页面样式
@@ -62,6 +64,9 @@ spec:
         - $formkit: text
           name: site_icp
           label: ICP 备案
+        - $formkit: text
+          name: bgstyle
+          label: 背景设置
 
 
     - group: self

@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  xmlns:th="https://www.thymeleaf.org"
-  th:fragment="html (head,title,content)"
->
-  <head>
-    <title th:text="${title}"></title>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="html (head,title,content)">
 
-    <th:block th:if="${head != null}">
-      <th:block th:replace="${head}" />
-    </th:block> 
-    <th:block th:if="${head == null}">
-      <th:block th:replace=~{modules/head} />
-    </th:block> 
-  </head>
-  <body class="bg-[#f9f9f9]">
-    <th:block th:replace=~{modules/header} />
-    <section>
-      <th:block th:replace="${content}" />
-    </section>
+<head>
+  <title th:text="${title}"></title>
 
-    <th:block th:replace=~{modules/footer} />
-  </body>
+  <th:block th:if="${head != null}">
+    <th:block th:replace="${head}" />
+  </th:block>
+  <th:block th:if="${head == null}">
+    <th:block th:replace=~{modules/head} />
+  </th:block>
+</head>
+
+<body
+  th:style="${not #strings.isEmpty(theme.config.basics.bgstyle)} ? ${theme.config.basics.bgstyle} : 'background-color: rgb(248 248 248 / 70%); color: #24292f; background-image: radial-gradient(#E0E0E0 1px, transparent 1px); background-size: 20px 20px;'">
+  
+<th:block th:if="!(${theme.config.basics.indexview} eq 'desktop' and ${posts})">
+    <th:block th:replace="~{modules/header}" />
+</th:block>
+  <section>
+    <th:block th:replace="${content}" />
+  </section>
+
+  <th:block th:replace=~{modules/footer} />
+</body>
+
 </html>

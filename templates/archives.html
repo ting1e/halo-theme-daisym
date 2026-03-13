@@ -43,7 +43,8 @@
                         <th:block th:if="${theme.config.basics.archiveview} eq 'list' ">
                             <th:block th:each="month : ${archive.months}">
                                 <th:block th:each="post : ${month.posts}">
-                                    <div class="page-thumbnail overflow-hidden"
+                                   <div class="page-item hover:shadow-lg duration-300 mb-12">
+                                     <div 
                                         th:if="${not #strings.isEmpty(post.spec.cover)}">
                                         <a th:attr="title=${post.spec.title}" th:href="@{${post.status.permalink}}">
                                             <img class="ease duration-300 w-full max-h-[400px] hover:scale-110"
@@ -93,6 +94,7 @@
                                             <p th:text="${post.spec.excerpt.raw}"></p>
                                         </div>
                                     </div>
+                                   </div>
                                 </th:block>
                             </th:block>
                         </th:block>
