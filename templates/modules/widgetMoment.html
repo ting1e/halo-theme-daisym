@@ -1,0 +1,19 @@
+<div class="widget bg-white w-full p-8 hover:shadow-lg duration-300">
+    <div class="widget-title text-black font-bold mb-2">
+        <p>最新瞬间</p>
+    </div>
+    <div class="widget-hr border-b border-gray-300 w-full mb-4"></div>
+    <div class="widget-content text-767676">
+        <ul class="listing" th:with="moments = ${momentFinder.list(1, 7)}">
+            <li class="py-1 w-full flex items-center" th:each="moment : ${moments.items}">
+                <div class="truncate w-full">
+                    <i class="ri-arrow-right-s-fill flex-shrink-0"></i>
+                    <a class="hover:text-black" th:href="@{/moments}">
+                        [[${#dates.format(moment.spec.releaseTime,'yyyy-MM-dd')}]]
+                        [(${#strings.replace(moment.spec.content.html.replaceAll('<[^>]*>', ''), '&nbsp;', ' ')})]
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

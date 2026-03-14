@@ -1119,6 +1119,10 @@ body {
   margin-right: 1rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1203,10 +1207,6 @@ body {
 
 .min-w-0 {
   min-width: 0px;
-}
-
-.max-w-\[330px\] {
-  max-width: 330px;
 }
 
 .max-w-\[100px\] {

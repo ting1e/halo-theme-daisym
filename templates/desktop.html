@@ -35,6 +35,8 @@
       <th:block th:replace=~{modules/widgetNewPost} />
     </div>
 
+    
+
      <!-- Widget: 底部 -->
     <div class="desktop-widget flex justify-center" data-widget-id="footer" style="left: 40px; top: 800px; width: 480px;">
       <th:block th:replace=~{modules/widgetFoot} />
@@ -50,6 +52,11 @@
      <!-- Widget: 文章列表 -->
     <div class="desktop-widget" data-widget-id="postlist" style="left: 40px; top: 300px; width: 640px;">
       <th:block th:replace=~{modules/postsList} />
+    </div>
+
+    <!-- Widget: 动态 -->
+    <div class="desktop-widget" data-widget-id="moment" style="left: 40px; top: 600px; width: 640px;">
+      <th:block th:replace=~{modules/widgetMoment} />
     </div>
 
     <!-- Widget: 最新评论 -->
@@ -236,10 +243,11 @@
           'menu':     { x: 0.1, y: 0.3 }, // 左中
           'footer':   { x: 0.05, y: 0.75 }, // 左下
           'postlist': { x: 0.32, y: 0.15 }, // 中上
-          'newpost':  { x: 0.32, y: 0.6 }, // 文章列表下左
-          'comments': { x: 0.5, y: 0.6 }, // 文章列表下右
-          'quote':    { x: 0.7, y: 0.1 }, // 右上
-          'webinfo':  { x: 0.7, y: 0.45 }  // 右下
+          'moment':   { x: 0.32, y: 0.6 }, // 中下
+          'newpost':  { x: 0.6, y: 0.6 }, // 文章列表下左
+          'comments': { x: 0.75, y: 0.6 }, // 文章列表下右
+          'quote':    { x: 0.6, y: 0.1 }, // 右上
+          'webinfo':  { x: 0.75, y: 0.2 }  // 右下
         };
 
         widgets.forEach(function (w) {

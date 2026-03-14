@@ -1,38 +1,50 @@
- <ul class="listing">
-    <li class="py-1 w-full flex justify-start space-x-1"
-        th:each="post :  ${posts.items}">
-        <div class="truncate block">
-            <i class="ri-arrow-right-s-fill"></i>
-            <span>[[${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}]]</span>
-            <span style="margin-right:.5rem"> </span>
-            <a class="hover:text-black" th:href="@{${post.status.permalink}}"
-                    th:title="${post.spec.title}" th:text="${post.spec.title}">
-                </a>
-            </div>
-        </li>
-    </th:block>
-</ul>
 
-<nav>
-    <div class="bg-white ">
-        <nav aria-label="Page navigation">
-            <ul class="flex justify-between list-style-none space-x-3">
-                    <li class="page-item">
-                            <a class="text-black page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-                            th:if="${posts.hasPrevious}" th:href="${posts.prevUrl}">上一页</a>
-                    </li>
-                    <li class="page-item">
-                        <span class="page-link relative block py-1.5 px-3 rounded border-0 outline-none transition-all duration-300 rounded text-gray-800 text-gray-800 bg-gray-200 shadow-none">
-                            [[${posts.page}]] / [[${posts.totalPages}]]
-                        </span>
-                    </li>
 
-                    <li class="page-item">
-                            <a class="text-black relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-                            th:if="${posts.hasNext}" th:href="${posts.nextUrl}">下一页</a>
-                    </li>
-            </ul>
-        </nav>
+<div class="widget bg-white w-full p-8 hover:shadow-lg duration-300">
+    <div class="widget-title text-black font-bold mb-2">
+        <p>文章列表</p>
     </div>
+    <div class="widget-hr border-b border-gray-300 w-full mb-4">
+    </div>
+    <div class="widget-content text-767676">
+        <ul class="listing">
+            <li class="py-1 w-full flex justify-start space-x-1"
+                th:each="post :  ${posts.items}">
+                <div class="truncate block">
+                    <i class="ri-arrow-right-s-fill"></i>
+                    <span>[[${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}]]</span>
+                    <span style="margin-right:.5rem"> </span>
+                    <a class="hover:text-black" th:href="@{${post.status.permalink}}"
+                            th:title="${post.spec.title}" th:text="${post.spec.title}">
+                        </a>
+                    </div>
+                </li>
+            </th:block>
+        </ul>
 
-</nav>
+        <nav>
+            <div class="bg-white ">
+                <nav aria-label="Page navigation">
+                    <ul class="flex justify-between list-style-none space-x-3">
+                            <li class="page-item">
+                                    <a class="text-black page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                                    th:if="${posts.hasPrevious}" th:href="${posts.prevUrl}">上一页</a>
+                            </li>
+                            <li class="page-item">
+                                <span class="page-link relative block py-1.5 px-3 rounded border-0 outline-none transition-all duration-300 rounded text-gray-800 text-gray-800 bg-gray-200 shadow-none">
+                                    [[${posts.page}]] / [[${posts.totalPages}]]
+                                </span>
+                            </li>
+
+                            <li class="page-item">
+                                    <a class="text-black relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                                    th:if="${posts.hasNext}" th:href="${posts.nextUrl}">下一页</a>
+                            </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </nav>
+        
+    </div>
+</div>

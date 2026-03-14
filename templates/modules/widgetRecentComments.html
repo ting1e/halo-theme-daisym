@@ -13,27 +13,31 @@
                     <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'Moment'" >
                         <i class="ri-arrow-right-s-fill"></i>
                         <a class="hover:text-black" th:href="@{'/moments'}">
-                            [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
+                            [[${comment.spec.owner.displayName}]] : [(${#strings.replace(comment.spec.content.replaceAll('<[^>]*>', ''), '&nbsp;', ' ')})]
+                        </a>
                     </div>
 
                     <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'Post'" >
                         <i class="ri-arrow-right-s-fill"></i>
                         <a class="hover:text-black" th:href="@{${postFinder.getByName(comment.spec.subjectRef.name).status.permalink}}">
-                            [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
+                            [[${comment.spec.owner.displayName}]] : [(${#strings.replace(comment.spec.content.replaceAll('<[^>]*>', ''), '&nbsp;', ' ')})]
+                        </a>
 
                     </div>
 
                     <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'SinglePage'" >
                         <i class="ri-arrow-right-s-fill"></i>
                         <a class="hover:text-black" th:href="@{${singlePageFinder.getByName(comment.spec.subjectRef.name).status.permalink}}">
-                            [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
+                            [[${comment.spec.owner.displayName}]] : [(${#strings.replace(comment.spec.content.replaceAll('<[^>]*>', ''), '&nbsp;', ' ')})]
+                        </a>
 
                     </div>
 
                     <div class="truncate block overflow-hidden" th:if="${comment.spec.subjectRef.kind} eq 'Links'" >
                         <i class="ri-arrow-right-s-fill"></i>
                         <a class="hover:text-black" th:href="@{links}">
-                            [[${comment.spec.owner.displayName}]] : [[${comment.spec.content}]]</a>
+                            [[${comment.spec.owner.displayName}]] : [(${#strings.replace(comment.spec.content.replaceAll('<[^>]*>', ''), '&nbsp;', ' ')})]
+                        </a>
 
                     </div>
 
