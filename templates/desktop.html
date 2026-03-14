@@ -6,73 +6,91 @@
   <div id="desktop" class="relative w-full min-h-screen p-6">
 
     <!-- Widget: 个人名片 -->
-    <div class="desktop-widget" data-widget-id="profile" style="left: 40px; top: 40px; width: 480px;">
-      <div class="flex items-center space-x-3 mb-4">
-        <div class="w-24 h-24 rounded-full bg-cover bg-center flex-shrink-0"
-          th:if="${not #strings.isEmpty(theme.config.self.logo)}"
-          th:style="'background-image: url(' + @{${theme.config.self.logo}} + ')'"></div>
-        <div>
-          <h2 class="text-xl font-bold" th:text="${theme.config.self.name}"></h2>
-          <p class="text-lg text-gray-500" th:text="${theme.config.self.description}"></p>
+    <th:block th:if="${theme.config.desktop.profile}">
+      <div class="desktop-widget" data-widget-id="profile" style="left: 40px; top: 40px; width: 480px;">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-24 h-24 rounded-full bg-cover bg-center flex-shrink-0"
+            th:if="${not #strings.isEmpty(theme.config.self.logo)}"
+            th:style="'background-image: url(' + @{${theme.config.self.logo}} + ')'"></div>
+          <div>
+            <h2 class="text-xl font-bold" th:text="${theme.config.self.name}"></h2>
+            <p class="text-lg text-gray-500" th:text="${theme.config.self.description}"></p>
+          </div>
+        </div>
+        <div class="flex space-x-3">
+          <a th:if="${not #strings.isEmpty(theme.config.self.github)}" th:href="@{${theme.config.self.github}}"
+            target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-github-line text-xl"></i></a>
+          <a th:if="${not #strings.isEmpty(theme.config.self.bilibili)}" th:href="@{${theme.config.self.bilibili}}"
+            target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-bilibili-line text-xl"></i></a>
+          <a th:if="${not #strings.isEmpty(theme.config.self.email)}" th:href="@{${theme.config.self.email}}"
+            target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-mail-line text-xl"></i></a>
+          <a th:if="${not #strings.isEmpty(theme.config.self.steam)}" th:href="@{${theme.config.self.steam}}"
+            target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-steam-line text-xl"></i></a>
+          <a th:if="${not #strings.isEmpty(theme.config.self.rss)}" th:href="@{${theme.config.self.rss}}"
+            target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-rss-line text-xl"></i></a>
         </div>
       </div>
-      <div class="flex space-x-3">
-        <a th:if="${not #strings.isEmpty(theme.config.self.github)}" th:href="@{${theme.config.self.github}}"
-          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-github-line text-xl"></i></a>
-        <a th:if="${not #strings.isEmpty(theme.config.self.bilibili)}" th:href="@{${theme.config.self.bilibili}}"
-          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-bilibili-line text-xl"></i></a>
-        <a th:if="${not #strings.isEmpty(theme.config.self.email)}" th:href="@{${theme.config.self.email}}"
-          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-mail-line text-xl"></i></a>
-        <a th:if="${not #strings.isEmpty(theme.config.self.steam)}" th:href="@{${theme.config.self.steam}}"
-          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-steam-line text-xl"></i></a>
-        <a th:if="${not #strings.isEmpty(theme.config.self.rss)}" th:href="@{${theme.config.self.rss}}"
-          target="_blank" class="text-gray-400 hover:text-black transition"><i class="ri-rss-line text-xl"></i></a>
-      </div>
-    </div>
+    </th:block>
 
     <!-- Widget: 最新文章 -->
+    <th:block th:if="${theme.config.desktop.newpost}">
     <div class="desktop-widget" data-widget-id="newpost" style="left: 40px; top: 300px; width: 320px;">
       <th:block th:replace=~{modules/widgetNewPost} />
     </div>
+    </th:block>
 
     
 
      <!-- Widget: 底部 -->
+    <th:block th:if="${theme.config.desktop.footer}">
     <div class="desktop-widget flex justify-center" data-widget-id="footer" style="left: 40px; top: 800px; width: 480px;">
       <th:block th:replace=~{modules/widgetFoot} />
     </div>
+    </th:block>
 
      <!-- Widget: 菜单 -->
+    <th:block th:if="${theme.config.desktop.menu}">
     <div class="desktop-widget" data-widget-id="menu" style="left: 40px; top: 300px; width: 150px;">
       <div class="pl-6 pr-2">
         <th:block th:replace=~{modules/widgetMenu} />
       </div>
     </div>
+    </th:block>
 
      <!-- Widget: 文章列表 -->
+    <th:block th:if="${theme.config.desktop.postlist}">
     <div class="desktop-widget" data-widget-id="postlist" style="left: 40px; top: 300px; width: 640px;">
       <th:block th:replace=~{modules/postsList} />
     </div>
+    </th:block>
 
     <!-- Widget: 动态 -->
+    <th:block th:if="${theme.config.desktop.moment}">
     <div class="desktop-widget" data-widget-id="moment" style="left: 40px; top: 600px; width: 640px;">
       <th:block th:replace=~{modules/widgetMoment} />
     </div>
+    </th:block>
 
     <!-- Widget: 最新评论 -->
+    <th:block th:if="${theme.config.desktop.comments}">
     <div class="desktop-widget" data-widget-id="comments" style="left: 400px; top: 40px; width: 380px;">
       <th:block th:replace=~{modules/widgetRecentComments} />
     </div>
+    </th:block>
 
     <!-- Widget: 站点统计 -->
+    <th:block th:if="${theme.config.desktop.webinfo}">
     <div class="desktop-widget" data-widget-id="webinfo" style="left: 400px; top: 380px; width: 380px;">
       <th:block th:replace=~{modules/widgetWebInfo} />
     </div>
+    </th:block>
 
     <!-- Widget: 标语 -->
+    <th:block th:if="${theme.config.desktop.quote}">
     <div class="desktop-widget" data-widget-id="quote" style="left: 820px; top: 40px; width: 320px;">
       <th:block th:replace=~{modules/widgetCard} />
     </div>
+    </th:block>
 
   </div>
 

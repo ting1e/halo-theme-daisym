@@ -125,6 +125,93 @@ spec:
           label: steam
           validation: "url"
 
+    - group: desktop
+      label: 桌面布局
+      formSchema:
+        - $formkit: radio
+          name: profile
+          label: 个人简介
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: menu
+          label: 菜单
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: footer
+          label: 底部
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: postlist
+          label: 文章列表
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+
+        - $formkit: radio
+          name: moment
+          label: 瞬间
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+
+        - $formkit: radio
+          name: newpost
+          label: 最新文章
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: comments
+          label: 最新评论
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: quote
+          label: 标语
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: webinfo
+          label: 站点统计
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+
 
     - group: sidebar
       label: 侧边栏
