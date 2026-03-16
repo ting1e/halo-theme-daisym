@@ -73,14 +73,14 @@
 
     <!-- Widget: 最新评论 -->
     <th:block th:if="${theme.config.desktop.comments}">
-    <div class="desktop-widget" data-widget-id="comments" style="left: 400px; top: 40px; width: 380px;">
+    <div class="desktop-widget" data-widget-id="comments" style="left: 400px; top: 40px; width: 320px;">
       <th:block th:replace=~{modules/widgetRecentComments} />
     </div>
     </th:block>
 
     <!-- Widget: 站点统计 -->
     <th:block th:if="${theme.config.desktop.webinfo}">
-    <div class="desktop-widget" data-widget-id="webinfo" style="left: 400px; top: 380px; width: 380px;">
+    <div class="desktop-widget" data-widget-id="webinfo" style="left: 400px; top: 380px; width: 320px;">
       <th:block th:replace=~{modules/widgetWebInfo} />
     </div>
     </th:block>
