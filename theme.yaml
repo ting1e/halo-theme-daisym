@@ -6,11 +6,11 @@ spec:
   displayName: theme daisym
   author:
     name: Joseph
-    website: "https://halo.run"
+    website: "https://elapse.cc"
   description: Halo 2.0 Theme base on Thymeleaf
-  logo: "https://halo.run/logo"
-  website: "https://b.mortal.live"
-  repo: "https://github.com/slyli/halo-theme-daisym"
+  logo: "https://elapse.cc/upload/photo_2025-07-23_13-43-02.jpg"
+  website: "https://elapse.cc"
+  repo: "https://github.com/ting1e/halo-theme-daisym"
   settingName: "theme-daisym-setting"
   configMapName: "theme-daisym-configMap"
   version: '2.0'
