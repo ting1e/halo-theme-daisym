@@ -9,7 +9,13 @@
         <th:block th:replace=~{page_self::content}/>
     </th:block>
     <th:block th:if="${theme.config.basics.indexview} eq 'desktop' "  >
-        <th:block th:replace=~{desktop::content}/>
+        <div class="block lg:hidden">
+            <th:block th:replace="~{modules/postsIndex}"/>
+        </div>
+
+        <div class="hidden lg:block">
+            <th:block th:replace="~{desktop::content}"/>
+        </div>
     </th:block>
 </th:block>
 

@@ -2,7 +2,7 @@
     <style>
         /* 为箭头图标添加平滑的过渡效果 */
         .rotate-90 {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
         }
         .transition-transform {
             transition: transform 0.3s ease-in-out;
@@ -17,8 +17,13 @@
                 <div th:if="${hasChildren}" class="flex  hover:text-black block w-full hover:tracking-wider duration-300" style="cursor: pointer;"
                     data-toggle>
                     <span th:text="${menuItem.status.displayName}"></span>
-                    <svg  style="width:1.5rem;height:1.5rem; margin-left:1rem" data-icon viewBox="0 0 24 24">
-                        <polygon points="8,5 19,12 8,19" fill="rgb(118, 118, 118)" />
+                    <svg style="width: 24px;height: 24px; margin-left:3rem"  data-icon  viewBox="0 0 24 24">
+                        <polyline points="6,9 12,15 18,9" 
+                                fill="none" 
+                                stroke="rgb(118, 118, 118)" 
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"/>
                     </svg>
                 </div>
 
@@ -29,9 +34,9 @@
                 th:text="${menuItem.status.displayName}"></a>
 
                 <!-- 子菜单项 -->
-                <ul class="space-y-1 hidden" data-submenu style="margin: 0.5rem 0">
+                <ul class="space-y-1 hidden border-l border-gray-200 ml-2 my-2 pl-2" data-submenu>
                     <li th:each="submenuItem : ${menuItem.children}">
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300" style="margin-left: 3rem;"
+                        <a class="hover:text-black block w-full hover:tracking-wider duration-300"
                         th:href="@{${submenuItem.status.href}}"
                         th:text="${submenuItem.status.displayName}"></a>
                     </li>
@@ -39,4 +44,4 @@
             </li>
         </ul>
         
-    </div>
+</div>

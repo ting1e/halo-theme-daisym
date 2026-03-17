@@ -13,7 +13,7 @@ spec:
   repo: "https://github.com/ting1e/halo-theme-daisym"
   settingName: "theme-daisym-setting"
   configMapName: "theme-daisym-configMap"
-  version: '2.0'
+  version: '2.0.1'
   require: '2.8.0'
   customTemplates:
     page:

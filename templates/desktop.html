@@ -43,14 +43,14 @@
 
      <!-- Widget: 底部 -->
     <th:block th:if="${theme.config.desktop.footer}">
-    <div class="desktop-widget flex justify-center" data-widget-id="footer" style="left: 40px; top: 800px; width: 480px;">
+    <div class="desktop-widget " data-widget-id="footer" style="left: 40px; top: 800px; width: 480px;">
       <th:block th:replace=~{modules/widgetFoot} />
     </div>
     </th:block>
 
      <!-- Widget: 菜单 -->
     <th:block th:if="${theme.config.desktop.menu}">
-    <div class="desktop-widget" data-widget-id="menu" style="left: 40px; top: 300px; width: 150px;">
+    <div class="desktop-widget" data-widget-id="menu" style="left: 40px; top: 300px; width: 180px;">
       <div class="pl-6 pr-2">
         <th:block th:replace=~{modules/widgetMenu} />
       </div>
@@ -112,11 +112,11 @@
       <i class="ri-shuffle-line text-lg"></i>
       <span>随机</span>
     </button>
-    <button title="搜索" onclick="javascript:SearchWidget.open()"
+    <!-- <button title="搜索" onclick="javascript:SearchWidget.open()"
       class="flex items-center gap-1.5 py-2.5 px-4 border border-white/60 rounded-[10px] bg-white/85 backdrop-blur-[12px] shadow-md text-sm text-gray-700 cursor-pointer select-none transition-all duration-200 hover:bg-white/95 hover:shadow-lg hover:-translate-y-px active:translate-y-0 active:scale-[0.97]">
       <i class="ri-search-line text-lg"></i>
       <span>搜索</span>
-    </button>
+    </button> -->
 
    
   </div>

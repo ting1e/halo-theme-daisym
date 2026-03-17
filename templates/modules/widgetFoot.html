@@ -1,13 +1,26 @@
-<div class="copyright text-767676">
-        <div class="copyright" >
-            <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
-                © [[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
+<div class="flex items-center justify-center">
+    
+    <div class="flex flex-col space-y-5 w-full items-center">
+        
+        <div class="flex text-767676 text-lg space-x-5">
+            <a href="javascript:SearchWidget.open()" class="inline-flex hover:text-black hover:scale-110 transition-transform duration-300" title="搜索">
+                <i class="ri-search-2-line"></i> 
             </a>
-            <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
-                ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
+
+            <a href="javascript:void(0);" onclick="window.location.href = '/logout?redirect_uri=' + encodeURIComponent(window.location.pathname + window.location.search);" class="inline-flex hover:text-black hover:scale-110 transition-transform duration-300" title="注销">
+                <i class="ri-logout-box-r-line"></i>
             </a>
-            <a class="hover:text-black block w-full hover:tracking-wider duration-300">
-               [[${theme.config.basics.site_icp}]]
+
+            <a href="/console" target="_blank" class="inline-flex hover:text-black hover:scale-110 transition-transform duration-300" title="管理后台">
+                <i class="ri-dashboard-line"></i>
             </a>
         </div>
+
+        <div class="copyright text-767676">
+            <a class="hover:text-black block w-full hover:tracking-wider duration-300 cursor-pointer">
+                © 2020 - 2026 MORTAL
+            </a>
+        </div>
+        
+    </div>
 </div>

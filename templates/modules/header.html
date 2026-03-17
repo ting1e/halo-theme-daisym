@@ -1,77 +1,14 @@
-<header class="hidden fixed w-[330px] px-16 h-screen space-y-16 lg:flex flex-col justify-center content-start bg-white">
+<header class="hidden fixed w-[330px] px-16 h-screen space-y-16 lg:flex flex-col justify-start content-start bg-white">
+    <div class="h-1/6 min-h-[100px]"></div>
     <div class="logo max-w-[100px]">
         <a th:href="@{${site.url}}" th:title="${site.title}">
             <img class="logo_img" th:src="${site.logo}" th:alt="${site.title}">
         </a>
     </div>
-   <div class="nav">
-    <style>
-        /* 为箭头图标添加平滑的过渡效果 */
-        .rotate-90 {
-            transform: rotate(90deg);
-        }
-        .transition-transform {
-            transition: transform 0.3s ease-in-out;
-        }
-    </style>
-        <ul class="text-767676 space-y-2">
-            <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}"
-                th:with="hasChildren=${not #lists.isEmpty(menuItem.children)}"
-                th:attr="data-has-children=${hasChildren}">
+   <th:block th:replace=~{modules/widgetMenu} />
+    
+    <th:block th:replace=~{::footer}  />
 
-                <!-- 顶级菜单项 -->
-                <div th:if="${hasChildren}" class="flex  hover:text-black block w-full hover:tracking-wider duration-300" style="cursor: pointer;"
-                    data-toggle>
-                    <span th:text="${menuItem.status.displayName}"></span>
-                    <svg  style="width:1.5rem;height:1.5rem; margin-left:1rem" data-icon viewBox="0 0 24 24">
-                        <polygon points="8,5 19,12 8,19" fill="rgb(118, 118, 118)" />
-                    </svg>
-                </div>
-
-                <!-- 没有子菜单，直接跳转 -->
-                <a class="hover:text-black block w-full hover:tracking-wider duration-300"
-                th:href="@{${menuItem.status.href}}"
-                th:if="${!hasChildren}"
-                th:text="${menuItem.status.displayName}"></a>
-
-                <!-- 子菜单项 -->
-                <ul class="space-y-1 hidden" data-submenu style="margin: 0.5rem 0">
-                    <li th:each="submenuItem : ${menuItem.children}">
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300" style="margin-left: 3rem;"
-                        th:href="@{${submenuItem.status.href}}"
-                        th:text="${submenuItem.status.displayName}"></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        
-    </div>
-
-
-    <div class="search flex justify-start text-767676 text-lg space-x-3">
-        <a href="javascript:SearchWidget.open()" class="inline-flex hover:text-black block w-full hover:tracking-wider duration-300">
-            <!-- <div class="border-b border-stone-300 " style="margin-right: 1rem;">搜索</div> -->
-            <i class="ri-search-2-line"></i> 
-        </a>
-        
-    </div>
-    <div class="copyright text-767676">
-        <div class="copyright" >
-            <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
-                © [[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
-            </a>
-            <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
-                ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
-            </a>
-            <a class="hover:text-black block w-full hover:tracking-wider duration-300">
-               [[${theme.config.basics.site_icp}]]
-            </a>
-            
-        </div>
-        
-        
-
-    </div>
 </header>
 
 
@@ -99,31 +36,64 @@
     </div>
     <div class="mobile-nav right-0 bg-white h-full w-full" id="mobileNav" style="display: none">
         <ul class="text-767676 space-y-6 py-6">
-            <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
-                <a class="hover:text-black block w-full hover:tracking-wider duration-300 text-center"
-                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" >${menu.name!} </a>
-                    <!-- <a class="hover:text-black block w-full hover:tracking-wider duration-300 text-center"
-                    th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}"  >${menu.name!} </a> -->
-            </li>
-            <li>
-                <div class="copyright text-767676" style="text-align:center">
-                    <div class="copyright" >
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
-                            ©[[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]]
-                        </a>
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300" th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
-                            ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${site.title}]]
-                        </a>
-                        <a class="hover:text-black block w-full hover:tracking-wider duration-300">
-                            [[${theme.config.basics.site_icp}]]
-                         </a>
-                        
-                    </div>
-                
-                </div>
-            </li>
+            <div class="flex justify-center">
+                <th:block th:replace=~{modules/widgetMenu} />
+            </div>
+            <div class="flex justify-center">
+                <th:block th:replace=~{::footer} />
+            </div>
         </ul>
     </div>
                   
     
 </header>
+
+
+<th:block th:fragment="footer">
+<div class="flex flex-col space-y-5">
+    <div class="flex items-center text-767676 text-lg space-x-5">
+
+        <a href="javascript:SearchWidget.open()"
+            class="inline-flex hover:text-black hover:scale-110 transition-transform duration-300" title="搜索">
+            <i class="ri-search-2-line"></i>
+        </a>
+
+        <a sec:authorize="isAnonymous()" href="javascript:void(0);"
+            onclick="window.location.href = '/login?redirect_uri=' + encodeURIComponent(window.location.pathname + window.location.search);"
+            class="inline-flex hover:text-black hover:scale-110 transition-transform duration-300" title="登录">
+            <i class="ri-user-line"></i>
+        </a>
+
+        <a sec:authorize="isAuthenticated()" href="javascript:void(0);"
+            onclick="window.location.href = '/logout?redirect_uri=' + encodeURIComponent(window.location.pathname + window.location.search);"
+            class="inline-flex hover:text-black hover:scale-110 transition-transform duration-300" title="注销">
+            <i class="ri-logout-box-r-line"></i>
+        </a>
+
+        <a sec:authorize="isAuthenticated()" href="/console" target="_blank"
+            class="inline-flex hover:text-black hover:scale-110 transition-transform duration-300" title="管理后台">
+            <i class="ri-dashboard-line"></i>
+        </a>
+
+    </div>
+
+
+    <div class="copyright text-767676 flex items-center w-full">
+        <div class="copyright">
+            <a class="hover:text-black block w-full hover:tracking-wider duration-300"
+                th:if="${not #strings.isEmpty(theme.config.basics.siteStartTime)}">
+                © [[${#strings.arraySplit(theme.config.basics.siteStartTime, '-')[0]}]] - [[${#dates.format(new
+                java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
+            </a>
+            <a class="hover:text-black block w-full hover:tracking-wider duration-300"
+                th:if="${#strings.isEmpty(theme.config.basics.siteStartTime)}">
+                ©[[${#dates.format(new java.util.Date(), 'yyyy')}]] [[${theme.config.basics.site_author}]]
+            </a>
+            <a class="hover:text-black block w-full hover:tracking-wider duration-300">
+                [[${theme.config.basics.site_icp}]]
+            </a>
+        </div>
+    </div>
+
+</div>
+</th:block>

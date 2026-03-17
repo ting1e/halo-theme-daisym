@@ -18,6 +18,11 @@
 <th:block th:if="!(${theme.config.basics.indexview} eq 'desktop' and ${posts})">
     <th:block th:replace="~{modules/header}" />
 </th:block>
+<th:block th:if="${theme.config.basics.indexview} eq 'desktop' and ${posts}">
+    <div class="block lg:hidden">
+            <th:block th:replace="~{modules/header}"/>
+        </div>
+</th:block>
   <section>
     <th:block th:replace="${content}" />
   </section>
